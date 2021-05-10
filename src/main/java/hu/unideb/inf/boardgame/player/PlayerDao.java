@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -17,7 +16,8 @@ public class PlayerDao {
 
 
     public List<Player> getPlayers() {
-        var ref = new TypeReference<List<Player>>() {};
+        var ref = new TypeReference<List<Player>>() {
+        };
         try {
             return objectMapper.readValue(getClass().getClassLoader().getResourceAsStream("players.json"), ref);
         } catch (Exception e) {
@@ -45,8 +45,19 @@ public class PlayerDao {
             System.out.println("uzenet" + ex.getMessage());
         }
     }
-    ;
+
+    public Player searchByUserName(String userName) {
+        List<Player> playerList = getPlayers();
+        for (int i = 0; i < playerList.size(); i++) {
+            if (playerList.get(i).getUserName().equals(userName)) {
+                return playerList.get(i);
+                }
+            }
+            return null;
+        }
     }
+
+
 
 
 

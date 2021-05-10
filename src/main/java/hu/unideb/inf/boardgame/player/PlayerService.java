@@ -24,4 +24,11 @@ public class PlayerService {
 
         log.info("Player added");
     }
+
+    public boolean searchForUser(String userName){
+        return playerDao.searchByUserName(userName) != null;
+    }
+
+
+
 }

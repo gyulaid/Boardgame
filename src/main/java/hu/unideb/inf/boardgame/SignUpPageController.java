@@ -30,15 +30,17 @@ public class SignUpPageController extends Controller{
     void onRegister(ActionEvent event) {
         logger.info("Register button pressed");
 
-        playerService.createUser(userNameField.getText(), passwordField.getText());
-/*
+        if (!playerService.searchForUser(userNameField.getText())) {
+            playerService.createUser(userNameField.getText(), passwordField.getText());
+            changeToScreen("MainMenuUI.fxml", event);
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("An error occured during registration");
             alert.setContentText("Given username already in use, Try again!");
             alert.showAndWait();
-*/
-        changeToScreen("MainMenuUI.fxml", event);
+        }
+
     }
 
 }
