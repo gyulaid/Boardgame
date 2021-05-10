@@ -10,15 +10,6 @@
 
     <description>A simple chess-like 2 player boardgame, first one to not be able to step loses.</description>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>16</maven.compiler.release>
-        <javafx.version>16</javafx.version>
-        <log4j.version>2.14.1</log4j.version>
-        <exec.mainClass>boardgame.Main</exec.mainClass>
-        <jacoco.version>0.8.6</jacoco.version>
-    </properties>
-
     <scm>
         <developerConnection>scm:git:https://github.com/gyulaid/HFProjekt</developerConnection>
     </scm>
@@ -33,26 +24,71 @@
         </developer>
     </developers>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>16</maven.compiler.release>
+        <javafx.version>16</javafx.version>
+        <log4j.version>2.14.1</log4j.version>
+        <exec.mainClass>hu.unideb.inf.boardgame.Main</exec.mainClass>
+        <jacoco.version>0.8.6</jacoco.version>
+        <jdbi.version>3.19.0</jdbi.version>
+        <jackson.version>2.12.2</jackson.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.30</version>
+            <version>2.0.0-alpha1</version>
         </dependency>
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>${javafx.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>${javafx.version}</version>
+            <scope>compile</scope>
         </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.20</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jdbi</groupId>
+            <artifactId>jdbi3-core</artifactId>
+            <version>${jdbi.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jdbi</groupId>
+            <artifactId>jdbi3-sqlobject</artifactId>
+            <version>${jdbi.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.200</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>3.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>3.0.0</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
@@ -64,13 +100,13 @@
                     <groupId>org.apache.logging.log4j</groupId>
                     <artifactId>log4j-core</artifactId>
                     <version>${log4j.version}</version>
-                    <scope>runtime</scope>
+
                 </dependency>
                 <dependency>
                     <groupId>org.apache.logging.log4j</groupId>
                     <artifactId>log4j-slf4j-impl</artifactId>
                     <version>${log4j.version}</version>
-                    <scope>runtime</scope>
+
                 </dependency>
             </dependencies>
         </profile>
