@@ -1,22 +1,12 @@
 package hu.unideb.inf.boardgame.player;
 
+import lombok.extern.slf4j.Slf4j;
 
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.List;
-
+@Slf4j
 public class PlayerService {
 
-    private static final Logger logger = LoggerFactory.getLogger(PlayerService.class);
 
-    private PlayerDao playerDao = new PlayerDao("players.json");
-    private List<Player> players;
-
-    public PlayerService(){
-
-    }
+    private PlayerDao playerDao = new PlayerDao();
 
     /**
      * Creates a new user and adds it to the database
@@ -27,17 +17,11 @@ public class PlayerService {
      */
     public void createUser(String userName, String password) {
 
-        logger.info("Adding player to the database");
-        players.add(new Player(userName, password));
+        log.info("Adding player to the database");
 
+        Player playerToAdd = new Player(userName, password);
+        playerDao.savePlayer(playerToAdd);
 
+        log.info("Player added");
     }
-
-
-
-
-
-
-
-
 }

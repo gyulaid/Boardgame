@@ -3,6 +3,8 @@ package hu.unideb.inf.boardgame.player;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+@NoArgsConstructor
 @Data
 public class Player {
 
