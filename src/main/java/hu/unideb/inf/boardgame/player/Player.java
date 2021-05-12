@@ -3,25 +3,44 @@ package hu.unideb.inf.boardgame.player;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
+/**
+ * Class for storing data of a player
+ */
 @NoArgsConstructor
 @Data
 public class Player {
 
+    /**
+     * Username of the player
+     */
     private String userName;
 
 
+    /**
+     * Password of the player
+     */
     private String password;
 
-
+    /**
+     * Amount of wins by the player
+     */
     private int amountOfWins;
 
-
+    /**
+     * Amount of losses by the player
+     */
     private int amountOfLosses;
 
 
-
-    public Player(String userName, String password){
+    /**
+     * Constructor for a new player.
+     * Sets the amount of wins/losses to 0
+     * Initializes a username and password pair
+     *
+     * @param userName Username of the player as a {@code String}
+     * @param password Password of the player as a String
+     */
+    public Player(String userName, String password) {
         this.userName = userName;
         this.password = password;
         amountOfWins = 0;
@@ -32,9 +51,9 @@ public class Player {
     /**
      * Calculates the amount of total games played, wins and losses together
      *
-      * @return an integer number of total games played
+     * @return an integer number of total games played
      */
-    private int gamesPlayed(){
+    private int gamesPlayed() {
         return amountOfLosses + amountOfWins;
     }
 
@@ -44,7 +63,7 @@ public class Player {
      *
      * @return a floating point number calculated from wins and losses
      */
-    private double winPerLoseRatio(){
+    private double winPerLoseRatio() {
         return ((double) amountOfWins) / amountOfLosses;
     }
 

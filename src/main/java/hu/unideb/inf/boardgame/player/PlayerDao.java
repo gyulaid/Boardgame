@@ -9,12 +9,20 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Data access object to the database of users
+ */
 @Slf4j
 public class PlayerDao {
 
     private final ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 
-
+    /**
+     * Gets all the users from the database
+     *
+     * @return a list of player objects, may return an {@code ArrayList<>()}
+     */
     public List<Player> getPlayers() {
         var ref = new TypeReference<List<Player>>() {
         };
@@ -26,7 +34,11 @@ public class PlayerDao {
         return new ArrayList<>();
     }
 
-
+    /**
+     * Saves a player to the database
+     *
+     * @param playerToSave a player object to save
+     */
     public void savePlayer(Player playerToSave) {
 
         try {
@@ -46,16 +58,23 @@ public class PlayerDao {
         }
     }
 
+
+    /**
+     * Search in the database by username
+     *
+     * @param userName String representing the username to find
+     * @return {@code Player} object with the given username
+     */
     public Player searchByUserName(String userName) {
         List<Player> playerList = getPlayers();
         for (int i = 0; i < playerList.size(); i++) {
             if (playerList.get(i).getUserName().equals(userName)) {
                 return playerList.get(i);
-                }
             }
-            return null;
         }
+        return null;
     }
+}
 
 
 

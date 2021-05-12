@@ -7,7 +7,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
-public class SignUpPageController extends Controller{
+/**
+ * Controller of the sign up page view
+ */
+public class SignUpPageController extends Controller {
 
     PlayerService playerService = new PlayerService();
 
@@ -28,7 +31,6 @@ public class SignUpPageController extends Controller{
 
     @FXML
     void onRegister(ActionEvent event) {
-        logger.info("Register button pressed");
 
         if (!playerService.searchForUser(userNameField.getText())) {
             playerService.createUser(userNameField.getText(), passwordField.getText());

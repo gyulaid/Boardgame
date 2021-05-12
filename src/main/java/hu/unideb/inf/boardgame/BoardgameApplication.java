@@ -9,8 +9,18 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Application class for the game
+ */
 public class BoardgameApplication extends Application {
 
+
+    /**
+     * Starts the main screen of the application
+     *
+     * @param stage .
+     * @throws IOException if any I/O error occurs
+     */
     @Override
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/MainMenuUI.fxml")));

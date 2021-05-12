@@ -6,16 +6,24 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
+/**
+ * Basic controller class
+ */
+@Slf4j
 public class Controller {
 
-    public static final Logger logger = LoggerFactory.getLogger(Controller.class);
-
-
+    /**
+     * Change to a another view
+     *
+     * @param fxml fxml filepath
+     * @param event .
+     */
     public void changeToScreen(String fxml, ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(fxml));
@@ -25,7 +33,7 @@ public class Controller {
             appStage.show();
 
         } catch (IOException ioe) {
-            logger.error("Error: Cannot load the FXML file" + fxml);
+            log.error("Error: Cannot load the FXML file" + fxml);
             ioe.printStackTrace();
         }
 
