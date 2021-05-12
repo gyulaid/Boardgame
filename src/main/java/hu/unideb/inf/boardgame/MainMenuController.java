@@ -5,6 +5,7 @@ import hu.unideb.inf.boardgame.player.PlayerService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
@@ -22,7 +23,16 @@ public class MainMenuController extends Controller{
     private TextField playerRed;
 
     @FXML
+    private PasswordField playerRedPassword;
+
+    @FXML
     private TextField playerBlue;
+
+    @FXML
+    private PasswordField playerBluePassword;
+
+
+
 
     public MainMenuController() {
     }
@@ -56,6 +66,18 @@ public class MainMenuController extends Controller{
 
     @FXML
     void onStartGame(ActionEvent event)  {
+        try {
+            if(playerService.validateLogIn(playerBlue.getText(), playerBluePassword.getText(), "Blue") &&
+            playerService.validateLogIn(playerRed.getText(), playerRedPassword.getText(), "Red")) {
+                changeToScreen("BoardgameUI.fxml", event);
+            }
+        } catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Login failed");
+            alert.setHeaderText(e.getMessage());
+            alert.showAndWait();
+        }
+
 
 
     }

@@ -31,4 +31,19 @@ public class PlayerService {
 
 
 
+    public boolean validateLogIn(String userName, String password, String color) throws InvalidLogInException{
+        if(searchForUser(userName)){
+            if(playerDao.searchByUserName(userName).getPassword().equals(password)){
+                return true;
+            }
+        }
+        throw new InvalidLogInException(color + " player has entered invalid username/password");
+
+
+    }
+
+
+
+
+
 }
