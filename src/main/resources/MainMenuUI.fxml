@@ -6,9 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane fx:id="MainMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-      minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.inf.boardgame.MainMenuController">
+<Pane fx:id="MainMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.inf.boardgame.MainMenuController">
     <children>
         <TextField fx:id="playerBlue" layoutX="45.0" layoutY="80.0" prefHeight="33.0" prefWidth="170.0" />
         <TextField fx:id="playerRed" layoutX="385.0" layoutY="80.0" prefHeight="33.0" prefWidth="170.0" />
@@ -19,6 +17,10 @@
         <Button layoutX="111.0" layoutY="297.0" mnemonicParsing="false" onAction="#onTopList" prefHeight="35.0" prefWidth="379.0" text="Top list" />
         <Button layoutX="111.0" layoutY="257.0" mnemonicParsing="false" onAction="#onInstructions" prefHeight="35.0" prefWidth="379.0" text="Instructions" />
         <Button layoutX="111.0" layoutY="217.0" mnemonicParsing="false" onAction="#onRegister" prefHeight="35.0" prefWidth="379.0" text="Register" />
+      <TextField fx:id="playerBluePassword" layoutX="45.0" layoutY="130.0" prefHeight="33.0" prefWidth="170.0" />
+      <TextField fx:id="playerRedPassword" layoutX="385.0" layoutY="130.0" prefHeight="33.0" prefWidth="170.0" />
+      <Label layoutX="267.0" layoutY="89.0" text="Username" />
+      <Label layoutX="269.0" layoutY="139.0" text="Password" />
     </children>
     <opaqueInsets>
         <Insets />
