@@ -1,5 +1,6 @@
 package hu.unideb.inf.boardgame;
 
+import hu.unideb.inf.boardgame.player.PlayerCache;
 import hu.unideb.inf.boardgame.player.PlayerService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -63,6 +64,10 @@ public class MainMenuController extends Controller {
         try {
             if (playerService.validateLogIn(playerBlue.getText(), playerBluePassword.getText(), "Blue") &&
                     playerService.validateLogIn(playerRed.getText(), playerRedPassword.getText(), "Red")) {
+
+                PlayerCache.initializePlayerBlue(playerService.getPlayerData(playerBlue.getText()));
+                PlayerCache.initializePlayerRed(playerService.getPlayerData(playerRed.getText()));
+
                 changeToScreen("BoardgameUI.fxml", event);
             }
         } catch (Exception e) {
@@ -82,6 +87,9 @@ public class MainMenuController extends Controller {
     void onRegister(ActionEvent event) {
         changeToScreen("SignUpPage.fxml", event);
     }
+
+
+
 
 
 }

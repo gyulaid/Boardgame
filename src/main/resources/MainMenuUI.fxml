@@ -10,18 +10,18 @@
 <Pane fx:id="MainMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.inf.boardgame.MainMenuController">
     <children>
         <TextField fx:id="playerBlue" layoutX="45.0" layoutY="80.0" prefHeight="33.0" prefWidth="170.0" />
+        <PasswordField fx:id="playerBluePassword" layoutX="45.0" layoutY="130.0" prefHeight="33.0" prefWidth="170.0" />
         <TextField fx:id="playerRed" layoutX="385.0" layoutY="80.0" prefHeight="33.0" prefWidth="170.0" />
+        <PasswordField fx:id="playerRedPassword" layoutX="385.0" layoutY="130.0" prefHeight="33.0" prefWidth="170.0" />
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="77.0" layoutY="25.0" prefHeight="33.0" prefWidth="106.0" text="Player Blue" textFill="#1802ed" />
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="417.0" layoutY="25.0" prefHeight="33.0" prefWidth="106.0" text="Player Red" textFill="RED" />
-        <Button layoutX="111.0" layoutY="337.0" mnemonicParsing="false" onAction="#onQuitGame" prefHeight="35.0" prefWidth="379.0" text="Quit game" />
         <Button layoutX="111.0" layoutY="177.0" mnemonicParsing="false" onAction="#onStartGame" prefHeight="35.0" prefWidth="379.0" text="Start game" />
-        <Button layoutX="111.0" layoutY="297.0" mnemonicParsing="false" onAction="#onTopList" prefHeight="35.0" prefWidth="379.0" text="Top list" />
-        <Button layoutX="111.0" layoutY="257.0" mnemonicParsing="false" onAction="#onInstructions" prefHeight="35.0" prefWidth="379.0" text="Instructions" />
         <Button layoutX="111.0" layoutY="217.0" mnemonicParsing="false" onAction="#onRegister" prefHeight="35.0" prefWidth="379.0" text="Register" />
+        <Button layoutX="111.0" layoutY="257.0" mnemonicParsing="false" onAction="#onInstructions" prefHeight="35.0" prefWidth="379.0" text="Instructions" />
+        <Button layoutX="111.0" layoutY="297.0" mnemonicParsing="false" onAction="#onTopList" prefHeight="35.0" prefWidth="379.0" text="Top list" />
+        <Button layoutX="111.0" layoutY="337.0" mnemonicParsing="false" onAction="#onQuitGame" prefHeight="35.0" prefWidth="379.0" text="Quit game" />
       <Label layoutX="267.0" layoutY="89.0" text="Username" />
       <Label layoutX="269.0" layoutY="139.0" text="Password" />
-      <PasswordField fx:id="playerBluePassword" layoutX="45.0" layoutY="130.0" prefHeight="33.0" prefWidth="170.0" />
-      <PasswordField fx:id="playerRedPassword" layoutX="385.0" layoutY="130.0" prefHeight="33.0" prefWidth="170.0" />
     </children>
     <opaqueInsets>
         <Insets />
