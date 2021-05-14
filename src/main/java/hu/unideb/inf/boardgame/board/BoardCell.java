@@ -25,12 +25,25 @@ public class BoardCell {
         diskInCell = null;
     }
 
+
+    /**
+     * Checks if the cell is available to step on
+     *
+     * @param color {@code PlayerColors} value of the stepping disk
+     * @return Boolean value true, if the cell is available to step on, false if not
+     */
     public boolean isSteppable(PlayerColors color) {
-        if (!isRestrictedCell && diskInCell == null) {
+        if (!this.isEmpty()) {
             return true;
         } else return diskInCell != null && !diskInCell.getOwnerColor().equals(color);
     }
 
+
+    /**
+     * Checks if the cell is empty and not restricted
+     *
+     * @return Boolean value true, if the cell is empty and not restricted, false otherwise
+     */
     public boolean isEmpty() {
         return !isRestrictedCell && diskInCell == null;
     }

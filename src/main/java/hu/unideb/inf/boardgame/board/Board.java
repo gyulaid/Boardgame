@@ -41,10 +41,14 @@ public class Board {
         boardCells[rowIndex][columnIndex].setRestrictedCell(true);
     }
 
+    /**
+     * Initializes players' disks on the board
+     *
+     * @param amountOfDisksPerPlayer Integer value of the amount of disks to be placed down for a player
+     */
+    private void initDisks(int amountOfDisksPerPlayer) {
 
-    private void initDisks(int x) {
-
-        for (int i = 0; i < x; i++) {
+        for (int i = 0; i < amountOfDisksPerPlayer; i++) {
             this.boardCells[0][i].setDiskInCell(new Disk(PlayerColors.RED));
             log.debug("RED disk placed down");
             this.boardCells[ROWS_OF_BOARD - 1][i].setDiskInCell(new Disk(PlayerColors.RED));
@@ -52,7 +56,9 @@ public class Board {
         }
     }
 
-
+    /**
+     * Sets the indexes of the cells
+     */
     private void initCellIndexes() {
         for (int i = 0; i < ROWS_OF_BOARD; i++) {
             for (int j = 0; j < COLUMNS_OF_BOARD; j++) {
@@ -62,7 +68,11 @@ public class Board {
         }
     }
 
-
+    /**
+     * Creates a board for the game with pre-set parameters
+     *
+     * @return Board object of a created Board
+     */
     public static Board createBoard() {
         log.info("Creating gameboard");
         Board board = new Board(ROWS_OF_BOARD, COLUMNS_OF_BOARD);
@@ -75,6 +85,13 @@ public class Board {
     }
 
 
+    /**
+     * Checks the available steps from the cell of given parameters
+     *
+     * @param row    Integer value of the row index of the cell to check
+     * @param column Integer value of the column index of the cell to check
+     * @return List of the cells that are free to step on
+     */
     public List getAvailableSteps(int row, int column) {
         List availableCells = new ArrayList();
         BoardCell cellForward;
@@ -122,10 +139,17 @@ public class Board {
     }
 
 
-    public void selectCell(int row, int column){
+    /**
+     * Selects the cell with the parameter indexes.
+     * Sets the SELECTED_CELL to the boardCell with the given indexes
+     *
+     * @param row    Integer value of the row index of selected cell
+     * @param column Integer value of the column index of selected cell
+     */
+    public void selectCell(int row, int column) {
 
-        if(SELECTED_CELL == null){
-            log.debug("Selected Cell ("+ row + ", " + column + ")");
+        if (SELECTED_CELL == null) {
+            log.debug("Selected Cell (" + row + ", " + column + ")");
             SELECTED_CELL = boardCells[row][column];
         } else {
             log.debug("Unselected cell");
@@ -134,33 +158,21 @@ public class Board {
     }
 
 
-    public void stepTo(int row, int column){
-        if(getAvailableSteps(SELECTED_CELL.getRowIndex(), SELECTED_CELL.getColumnIndex()).contains(boardCells[row][column])){
+    /**
+     * Moves the disk from the selected cell to the given parameters
+     *
+     * @param row    Integer value of the row index of the destination
+     * @param column Integer value of the column index of the destination
+     */
+    public void stepTo(int row, int column) {
+        if (getAvailableSteps(SELECTED_CELL.getRowIndex(), SELECTED_CELL.getColumnIndex()).contains(boardCells[row][column])) {
             boardCells[row][column].setDiskInCell(SELECTED_CELL.getDiskInCell());
             SELECTED_CELL = null;
 
-            log.debug("Step from ("+SELECTED_CELL.getRowIndex()+", "+
-                        SELECTED_CELL.getColumnIndex()+") "+"to ("+ row + ", " + column + ")");
+            log.debug("Step from (" + SELECTED_CELL.getRowIndex() + ", " +
+                    SELECTED_CELL.getColumnIndex() + ") " + "to (" + row + ", " + column + ")");
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
