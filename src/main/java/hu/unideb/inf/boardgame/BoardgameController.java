@@ -1,20 +1,15 @@
 package hu.unideb.inf.boardgame;
+
 import hu.unideb.inf.boardgame.player.PlayerCache;
 import hu.unideb.inf.boardgame.player.PlayerColors;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-
-import java.net.URL;
-import java.util.EventListener;
-import java.util.ResourceBundle;
+import javafx.scene.layout.StackPane;
 
 
-public class BoardgameController extends Controller{
+public class BoardgameController extends Controller {
 
     PlayerCache playerCache;
 
@@ -29,11 +24,17 @@ public class BoardgameController extends Controller{
     private Label playerRedLabel;
 
     @FXML
-    private void initialize(){
+    private void initialize() {
         playerBlueLabel.setText(PlayerCache.getPlayerInstance(PlayerColors.BLUE).getUserName());
         playerRedLabel.setText((PlayerCache.getPlayerInstance(PlayerColors.RED).getUserName()));
-    }
 
+        for (int i = 0; i < gameboard.getRowCount() - 1; i++) {
+            for (int j = 0; j < gameboard.getColumnCount(); j++) {
+                StackPane cell = createCell(i, j);
+                gameboard.add(cell, j, i);
+            }
+        }
+    }
 
     @FXML
     void onExit(ActionEvent event) {
@@ -41,6 +42,11 @@ public class BoardgameController extends Controller{
     }
 
 
+    private StackPane createCell(int i, int j) {
+        StackPane cell = new StackPane();
+        cell.getStyleClass().add("cell");
+        return cell;
+    }
 
 }
 

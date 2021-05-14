@@ -1,0 +1,8 @@
+.cell {
+    -fx-border-style: solid;
+    -fx-background-color: white;
+}
+
+.cell:hover {
+    -fx-background-color: whitesmoke;
+}
