@@ -2,6 +2,7 @@ package hu.unideb.inf.boardgame.board;
 
 import hu.unideb.inf.boardgame.disk.Disk;
 import hu.unideb.inf.boardgame.player.PlayerColors;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -11,32 +12,23 @@ import java.util.List;
  * Class of the gameboard
  */
 @Slf4j
+@Data
 public class Board {
 
-    private final BoardCell[][] boardCells;
-    private final static int ROWS_OF_BOARD = 6;
-    private final static int COLUMNS_OF_BOARD = 7;
-    private final static int[] RESTRICTED_ZONE_INDEX = {2, 4};
-    private final static int[] RESTRICTED_ZONE2_INDEX = {3, 2};
-    private static BoardCell SELECTED_CELL = null;
 
+    private List<List<BoardCell>> cells;
+    private BoardCell[][] boardCells;
+    private int ROWS_OF_BOARD;
+    private int COLUMNS_OF_BOARD;
+    private BoardCell selectedCell;
 
-    /**
-     * Constructor for the gameboard creation
-     *
-     * @param numberOfRows    Integer representing the number of rows to create
-     * @param numberOfColumns Integer representing the number of columns to create
-     */
-    private Board(int numberOfRows, int numberOfColumns) {
-        boardCells = new BoardCell[numberOfRows][numberOfColumns];
-    }
-
-    /**
-     * Sets a cell restricted to step on.
-     *
-     * @param rowIndex    index of the row of restricted zone
-     * @param columnIndex index of the column of restricted zone
-     */
+    /*
+        /**
+         * Sets a cell restricted to step on.
+         *
+         * @param rowIndex    index of the row of restricted zone
+         * @param columnIndex index of the column of restricted zone
+         *
     private void setRestrictedZone(int rowIndex, int columnIndex) {
         boardCells[rowIndex][columnIndex].setRestrictedCell(true);
     }
@@ -45,20 +37,20 @@ public class Board {
      * Initializes players' disks on the board
      *
      * @param amountOfDisksPerPlayer Integer value of the amount of disks to be placed down for a player
-     */
+     *
     private void initDisks(int amountOfDisksPerPlayer) {
 
         for (int i = 0; i < amountOfDisksPerPlayer; i++) {
-            this.boardCells[0][i].setDiskInCell(new Disk(PlayerColors.RED));
+            boardCells[0][i].setDiskInCell(new Disk(PlayerColors.RED));
             log.debug("RED disk placed down");
-            this.boardCells[ROWS_OF_BOARD - 1][i].setDiskInCell(new Disk(PlayerColors.RED));
+            boardCells[ROWS_OF_BOARD - 1][i].setDiskInCell(new Disk(PlayerColors.RED));
             log.debug("BLUE disk placed down");
         }
     }
 
     /**
      * Sets the indexes of the cells
-     */
+     *
     private void initCellIndexes() {
         for (int i = 0; i < ROWS_OF_BOARD; i++) {
             for (int j = 0; j < COLUMNS_OF_BOARD; j++) {
@@ -68,21 +60,6 @@ public class Board {
         }
     }
 
-    /**
-     * Creates a board for the game with pre-set parameters
-     *
-     * @return Board object of a created Board
-     */
-    public static Board createBoard() {
-        log.info("Creating gameboard");
-        Board board = new Board(ROWS_OF_BOARD, COLUMNS_OF_BOARD);
-        board.initCellIndexes();
-        board.setRestrictedZone(RESTRICTED_ZONE_INDEX[0], RESTRICTED_ZONE_INDEX[1]);
-        board.setRestrictedZone(RESTRICTED_ZONE2_INDEX[0], RESTRICTED_ZONE2_INDEX[1]);
-        board.initDisks(COLUMNS_OF_BOARD);
-        log.debug("Gameboard created");
-        return board;
-    }
 
 
     /**
@@ -91,7 +68,7 @@ public class Board {
      * @param row    Integer value of the row index of the cell to check
      * @param column Integer value of the column index of the cell to check
      * @return List of the cells that are free to step on
-     */
+     *
     public List getAvailableSteps(int row, int column) {
         List availableCells = new ArrayList();
         BoardCell cellForward;
@@ -145,7 +122,7 @@ public class Board {
      *
      * @param row    Integer value of the row index of selected cell
      * @param column Integer value of the column index of selected cell
-     */
+     *
     public void selectCell(int row, int column) {
 
         if (SELECTED_CELL == null) {
@@ -163,16 +140,87 @@ public class Board {
      *
      * @param row    Integer value of the row index of the destination
      * @param column Integer value of the column index of the destination
-     */
+     *
     public void stepTo(int row, int column) {
-        if (getAvailableSteps(SELECTED_CELL.getRowIndex(), SELECTED_CELL.getColumnIndex()).contains(boardCells[row][column])) {
-            boardCells[row][column].setDiskInCell(SELECTED_CELL.getDiskInCell());
-            SELECTED_CELL = null;
+        if (getAvailableSteps(selectedCell.getRowIndex(), selectedCell.getColumnIndex()).contains(boardCells[row][column])) {
+            boardCells[row][column].setDiskInCell(selectedCell.getDiskInCell());
+            selectedCell = null;
 
-            log.debug("Step from (" + SELECTED_CELL.getRowIndex() + ", " +
-                    SELECTED_CELL.getColumnIndex() + ") " + "to (" + row + ", " + column + ")");
+            log.debug("Step from (" + selectedCell.getRowIndex() + ", " +
+                    selectedCell.getColumnIndex() + ") " + "to (" + row + ", " + column + ")");
         }
     }
+
+*/
+
+
+    public static class BoardBuilder {
+
+        private List<List<BoardCell>> cells = new ArrayList<>();
+        private BoardCell[][] boardCells;
+        private int ROWS_OF_BOARD;
+        private int COLUMNS_OF_BOARD;
+
+
+    public BoardBuilder boardSize(int rowSize, int columnSize){
+        ROWS_OF_BOARD = rowSize;
+        COLUMNS_OF_BOARD = columnSize;
+        boardCells = new BoardCell[rowSize][columnSize];
+
+        for (int i = 0; i < ROWS_OF_BOARD; i++) {
+
+            cells.add(new ArrayList<BoardCell>());
+
+            for (int j = 0; j < COLUMNS_OF_BOARD; j++) {
+
+                cells.get(i).add(new BoardCell());
+                cells.get(i).get(j).setRowIndex(i);
+                cells.get(i).get(j).setColumnIndex(j);
+            }
+        }
+        initDisks(COLUMNS_OF_BOARD);
+        return this;
+    }
+
+        private void initCellIndexes() {
+            for (int i = 0; i < ROWS_OF_BOARD; i++) {
+                for (int j = 0; j < COLUMNS_OF_BOARD; j++) {
+
+                    boardCells[i][j].setRowIndex(i);
+                    boardCells[i][j].setColumnIndex(j);
+                }
+            }
+        }
+
+
+        private void initDisks(int amountOfDisksPerPlayer) {
+
+            for (int i = 0; i < amountOfDisksPerPlayer; i++) {
+                cells.get(0).get(i).setDiskInCell(new Disk(PlayerColors.RED));
+                log.debug("RED disk placed down");
+                cells.get(ROWS_OF_BOARD - 1).get(i).setDiskInCell(new Disk(PlayerColors.RED));
+                log.debug("BLUE disk placed down");
+            }
+        }
+
+
+        public BoardBuilder restrictedZone(int rowIndex, int columnIndex){
+        cells.get(rowIndex).get(columnIndex).setRestrictedCell(true);
+        return this;
+    }
+
+    public Board build(){
+        Board board = new Board();
+        board.ROWS_OF_BOARD = this.ROWS_OF_BOARD;
+        board.COLUMNS_OF_BOARD = this.COLUMNS_OF_BOARD;
+        board.cells = this.cells;
+        board.selectedCell = null;
+        return board;
+    }
+
+    }
+
+
 
 
 }

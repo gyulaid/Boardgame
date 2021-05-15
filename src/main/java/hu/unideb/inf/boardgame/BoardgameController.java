@@ -1,5 +1,6 @@
 package hu.unideb.inf.boardgame;
 
+import hu.unideb.inf.boardgame.board.Board;
 import hu.unideb.inf.boardgame.player.PlayerCache;
 import hu.unideb.inf.boardgame.player.PlayerColors;
 import javafx.event.ActionEvent;
@@ -11,7 +12,13 @@ import javafx.scene.layout.StackPane;
 
 public class BoardgameController extends Controller {
 
+    private int ROWS_OF_BOARD = 6;
+    private int COLUMNS_OF_BOARD = 7;
+
     PlayerCache playerCache;
+    Board board = new Board.BoardBuilder().boardSize(ROWS_OF_BOARD, COLUMNS_OF_BOARD)
+                                            .restrictedZone(3, 4)
+                                            .build();
 
 
     @FXML
@@ -28,8 +35,8 @@ public class BoardgameController extends Controller {
         playerBlueLabel.setText(PlayerCache.getPlayerInstance(PlayerColors.BLUE).getUserName());
         playerRedLabel.setText((PlayerCache.getPlayerInstance(PlayerColors.RED).getUserName()));
 
-        for (int i = 0; i < gameboard.getRowCount() - 1; i++) {
-            for (int j = 0; j < gameboard.getColumnCount(); j++) {
+        for (int i = 0; i < ROWS_OF_BOARD  ; i++) {
+            for (int j = 0; j < COLUMNS_OF_BOARD; j++) {
                 StackPane cell = createCell(i, j);
                 gameboard.add(cell, j, i);
             }

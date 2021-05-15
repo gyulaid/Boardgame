@@ -2,12 +2,14 @@ package hu.unideb.inf.boardgame.board;
 
 import hu.unideb.inf.boardgame.disk.Disk;
 import hu.unideb.inf.boardgame.player.PlayerColors;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 
 /**
  * Class for the cells of the gameboard
  */
+@AllArgsConstructor
 @Data
 public class BoardCell {
 
@@ -23,6 +25,8 @@ public class BoardCell {
     public BoardCell() {
         isRestrictedCell = false;
         diskInCell = null;
+        rowIndex = 0;
+        columnIndex = 0;
     }
 
 

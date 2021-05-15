@@ -12,6 +12,8 @@ public class Main {
      */
     public static void main(String[] args) {
 
+        System.out.println(9);
+
         Application.launch(BoardgameApplication.class, args);
     }
 }
