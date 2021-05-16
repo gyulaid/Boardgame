@@ -1,5 +1,7 @@
 package hu.unideb.inf.boardgame.player;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Comparator;
@@ -20,6 +22,11 @@ public class PlayerService {
      */
     private PlayerDao playerDao = new PlayerDao();
 
+
+
+    public List<Player> getAllPlayers(){
+        return playerDao.getPlayers();
+    }
 
     /**
      * Creates a new user and adds it to the database.
@@ -44,19 +51,19 @@ public class PlayerService {
     }
 
 
-    /**
+ /*   /**
      * Searches a user in the database based on the username.
      *
      * @param userName username of the searched player
      * @return a boolean true or false
-     */
+     * /
     public boolean searchForUser(String userName) {
 
         log.info("Searching for player in the database");
 
         return playerDao.searchByUserName(userName) != null;
     }
-
+*/
 
     /**
      * Returns the user's data.
@@ -80,7 +87,7 @@ public class PlayerService {
      * @throws InvalidUserException if the validation fails
      */
     public boolean validateLogIn(String userName, String password, String color) throws InvalidUserException {
-        if (searchForUser(userName)) {
+        if (getPlayerData(userName) != null) {
             if (playerDao.searchByUserName(userName).getPassword().equals(password)) {
                 log.info("Login successful");
                 return true;

@@ -32,7 +32,7 @@ public class SignUpPageController extends Controller {
 
     @FXML
     void onRegister(ActionEvent event) {
-        if (!playerService.searchForUser(userNameField.getText())) {
+        if (playerService.getPlayerData(userNameField.getText()) == null) {
             try {
                 playerService.createUser(userNameField.getText(), passwordField.getText());
                 changeToScreen("MainMenuUI.fxml", event);

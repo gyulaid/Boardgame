@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 public class PlayerDao {
 
-    private final ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+    private ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 
     /**
      * Gets all the users from the database.
