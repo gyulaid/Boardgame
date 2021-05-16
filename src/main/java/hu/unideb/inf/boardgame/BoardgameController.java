@@ -34,7 +34,8 @@ public class BoardgameController extends Controller {
                 .build();
 
         boardService = new BoardService(board);
-
+        PlayerCache.getPlayerInstance(PlayerColors.BLUE).setColor(PlayerColors.BLUE);
+        PlayerCache.getPlayerInstance(PlayerColors.RED).setColor(PlayerColors.RED);
         activeColor = PlayerColors.BLUE;
     }
 
@@ -54,6 +55,7 @@ public class BoardgameController extends Controller {
         playerRedLabel.setText((PlayerCache.getPlayerInstance(PlayerColors.RED).getUserName()));
 
         board.getCells().forEach(this::addCellToBoard);
+        updateCells();
 
 
     }
@@ -91,7 +93,6 @@ public class BoardgameController extends Controller {
 
         int row = GridPane.getRowIndex(cell);
         int col = GridPane.getColumnIndex(cell);
-
         boardService.selectCell(row, col);
         updateCells();
     }
@@ -230,16 +231,16 @@ public class BoardgameController extends Controller {
 
                 if (!cell.getStyleClass().contains("disk") && hasDisk) {
                     cell.getStyleClass().add("disk");
+
                 }
             } else {
                 cell.getStyleClass().remove("selected");
                 cell.getStyleClass().remove("available-step");
+
             }
         }
 
         cell.setOnMouseClicked(this::handleSelectClick);
-
-
     }
 
 }

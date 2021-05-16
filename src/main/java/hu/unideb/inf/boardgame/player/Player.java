@@ -1,11 +1,13 @@
 package hu.unideb.inf.boardgame.player;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
  * Class for storing data of a player
  */
+@JsonIgnoreProperties(value = {"color"})
 @NoArgsConstructor
 @Data
 public class Player {
@@ -31,6 +33,7 @@ public class Player {
      */
     private Double amountOfLosses;
 
+    private PlayerColors color;
 
     /**
      * Constructor for a new player.

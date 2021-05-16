@@ -23,6 +23,7 @@ public class BoardService {
     Player bluePlayer = PlayerCache.getPlayerInstance(PlayerColors.BLUE);
     Player redPlayer = PlayerCache.getPlayerInstance(PlayerColors.RED);
     PlayerService playerService = new PlayerService();
+    Player currentPlayer = PlayerCache.getPlayerInstance(PlayerColors.BLUE);
 
 
 
@@ -58,6 +59,10 @@ public class BoardService {
 
 
         return possibleRedSteps != 0 && possibleBlueSteps != 0;
+    }
+
+    public void setCurrentPlayer(Player player){
+        currentPlayer = player;
     }
 
 
@@ -127,22 +132,24 @@ public class BoardService {
      */
     public void selectCell(int row, int column) {
 
-        board.getCells().forEach(boardcell -> {
-            if (boardcell.getRowIndex() == row &&
-                    boardcell.getColumnIndex() == column &&
-                    boardcell.getDiskInCell() != null) {
-                if (boardcell.isSelected()) {
-                    boardcell.setSelected(false);
+        if (board.getCell(row,column).getDiskInCell() != null &&
+                board.getCell(row, column).getDiskInCell().getOwnerColor() == currentPlayer.getColor()) {
+
+            board.getCells().forEach(boardcell -> {
+                if (boardcell.getRowIndex() == row &&
+                        boardcell.getColumnIndex() == column &&
+                        boardcell.getDiskInCell() != null) {
+                    if (boardcell.isSelected()) {
+                        boardcell.setSelected(false);
+                    } else {
+                        boardcell.setSelected(true);
+                    }
                 } else {
-                    boardcell.setSelected(true);
+                    boardcell.setSelected(false);
                 }
-            } else {
-                boardcell.setSelected(false);
-            }
-        });
-
+            });
+        }
     }
-
 
     /**
      * Moves the disk from the selected cell to the given parameters
@@ -161,6 +168,7 @@ public class BoardService {
             board.getSelectedCell().setDiskInCell(null);
             board.getSelectedCell().setSelected(false);
         }
+        currentPlayer = PlayerCache.getPlayerInstance(PlayerColors.RED != currentPlayer.getColor() ? PlayerColors.RED : PlayerColors.BLUE);
     }
 
 
