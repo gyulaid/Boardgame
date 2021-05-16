@@ -24,12 +24,12 @@ public class Player {
     /**
      * Amount of wins by the player
      */
-    private int amountOfWins;
+    private Double amountOfWins;
 
     /**
      * Amount of losses by the player
      */
-    private int amountOfLosses;
+    private Double amountOfLosses;
 
 
     /**
@@ -43,8 +43,8 @@ public class Player {
     public Player(String userName, String password) {
         this.userName = userName;
         this.password = password;
-        amountOfWins = 0;
-        amountOfLosses = 0;
+        amountOfWins = 0.0;
+        amountOfLosses = 0.0;
     }
 
 
@@ -53,7 +53,7 @@ public class Player {
      *
      * @return an integer number of total games played
      */
-    private int gamesPlayed() {
+    public Double gamesPlayed() {
         return amountOfLosses + amountOfWins;
     }
 
@@ -63,9 +63,19 @@ public class Player {
      *
      * @return a floating point number calculated from wins and losses
      */
-    private double winPerLoseRatio() {
-        return ((double) amountOfWins) / amountOfLosses;
+    public Double winPerLoseRatio() {
+        if(amountOfLosses == 0){
+            return amountOfWins;
+        } else if(amountOfWins == 0){
+            return amountOfWins;
+        }
+
+        return  amountOfWins / amountOfLosses;
     }
 
 
+    @Override
+    public String toString() {
+        return "Name: " + userName + " Total Games: " + gamesPlayed() + " W/L Ratio: " + winPerLoseRatio();
+    }
 }

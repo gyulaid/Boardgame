@@ -80,6 +80,7 @@ public class MainMenuController extends Controller {
 
     @FXML
     void onTopList(ActionEvent event) {
+        changeToScreen("TopList.fxml", event);
 
     }
 

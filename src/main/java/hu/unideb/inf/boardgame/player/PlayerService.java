@@ -2,6 +2,10 @@ package hu.unideb.inf.boardgame.player;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 /**
  * Service class to communicate with the Dao.
@@ -25,9 +29,9 @@ public class PlayerService {
      */
     public void createUser(String userName, String password) throws InvalidUserException {
 
-        if(userName.length() < 5 || userName.length() > 30) {
+        if (userName.length() < 5 || userName.length() > 30) {
             throw new InvalidUserException("Username must be between 5 and 30 characters");
-        } else if(password.length() < 5 || password.contains(" ")) {
+        } else if (password.length() < 5 || password.contains(" ")) {
             throw new InvalidUserException("Password must be atleast 5 characters and can not contain spaces");
         }
 
@@ -53,7 +57,7 @@ public class PlayerService {
         return playerDao.searchByUserName(userName) != null;
     }
 
-    public Player getPlayerData(String userName){
+    public Player getPlayerData(String userName) {
         return playerDao.searchByUserName(userName);
     }
 
@@ -77,5 +81,18 @@ public class PlayerService {
         log.debug("Failed to login");
         throw new InvalidUserException(color + " player has entered invalid username/password");
     }
+
+
+    public List<Player> getTopList() {
+        return playerDao.getPlayers()
+                        .stream()
+                        .sorted(Comparator.comparing(Player::winPerLoseRatio).reversed())
+                        .collect(Collectors.toList());
+    }
+
+    public void updatePlayers(String userName, String result){
+        playerDao.updatePlayer(userName, result);
+    }
+
 
 }

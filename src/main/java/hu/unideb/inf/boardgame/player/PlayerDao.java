@@ -59,6 +59,25 @@ public class PlayerDao {
     }
 
 
+    public void deletePlayer(Player playerToDelete) {
+        try {
+            List<Player> players = getPlayers();
+
+            players.remove(playerToDelete);
+
+            FileWriter writer = new FileWriter(getClass().getClassLoader().getResource("players.json").getPath());
+
+            objectMapper.writeValue(writer, players);
+
+            log.info("Write file");
+
+        } catch (Exception ex) {
+            log.error("Exception caught {}", ex);
+            System.out.println("uzenet" + ex.getMessage());
+        }
+    }
+
+
     /**
      * Search in the database by username
      *
@@ -74,7 +93,38 @@ public class PlayerDao {
         }
         return null;
     }
+
+    public void updatePlayer(String userName, String Result) {
+        try {
+            List<Player> players = getPlayers();
+            Player playerToUpdate = searchByUserName(userName);
+            Player updatedPlayer = searchByUserName(userName);
+
+            if(Result.equals("Won")){
+                updatedPlayer.setAmountOfWins(updatedPlayer.getAmountOfWins() + 1);
+            } else if(Result.equals("Lost"))            {
+                updatedPlayer.setAmountOfLosses(playerToUpdate.getAmountOfLosses() + 1);
+            }
+
+            players.set(players.indexOf(playerToUpdate), updatedPlayer);
+
+            FileWriter writer = new FileWriter(getClass().getClassLoader().getResource("players.json").getPath());
+
+            objectMapper.writeValue(writer, players);
+
+            log.info("Write file");
+
+        } catch (Exception ex) {
+            log.error("Exception caught {}", ex);
+            System.out.println("uzenet" + ex.getMessage());
+        }
+    }
+
+
 }
+
+
+
 
 
 

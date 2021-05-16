@@ -1,6 +1,9 @@
 package hu.unideb.inf.boardgame.board;
 
+import hu.unideb.inf.boardgame.player.Player;
+import hu.unideb.inf.boardgame.player.PlayerCache;
 import hu.unideb.inf.boardgame.player.PlayerColors;
+import hu.unideb.inf.boardgame.player.PlayerService;
 import javafx.scene.layout.GridPane;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,10 +20,47 @@ public class BoardService {
 
 
     Board board;
+    Player bluePlayer = PlayerCache.getPlayerInstance(PlayerColors.BLUE);
+    Player redPlayer = PlayerCache.getPlayerInstance(PlayerColors.RED);
+    PlayerService playerService = new PlayerService();
+
+
 
     public BoardService(Board board) {
         this.board = board;
     }
+
+
+    public boolean playerWon(){
+
+        int possibleRedSteps = 0;
+        int possibleBlueSteps = 0;
+
+        for (BoardCell tempCell : board.getCellsWithDisks(PlayerColors.RED)) {
+            if (!getAvailableSteps(tempCell.getRowIndex(), tempCell.getColumnIndex()).isEmpty()) {
+                possibleRedSteps++;
+            }
+        }
+
+        for (BoardCell tempCell : board.getCellsWithDisks(PlayerColors.BLUE)) {
+            if (!getAvailableSteps(tempCell.getRowIndex(), tempCell.getColumnIndex()).isEmpty()) {
+                possibleBlueSteps++;
+            }
+        }
+
+        if(possibleBlueSteps == 0){
+            playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.BLUE).getUserName(), "Lost");
+            playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.RED).getUserName(), "Won");
+        } else if(possibleRedSteps == 0){
+                playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.BLUE).getUserName(), "Won");
+                playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.RED).getUserName(), "Lost");
+        }
+
+
+        return possibleRedSteps != 0 && possibleBlueSteps != 0;
+    }
+
+
 
 
     /**

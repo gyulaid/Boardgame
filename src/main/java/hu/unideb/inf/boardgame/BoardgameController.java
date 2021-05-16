@@ -52,7 +52,6 @@ public class BoardgameController extends Controller {
     private void initialize() {
         playerBlueLabel.setText(PlayerCache.getPlayerInstance(PlayerColors.BLUE).getUserName());
         playerRedLabel.setText((PlayerCache.getPlayerInstance(PlayerColors.RED).getUserName()));
-        System.out.println(board);
 
         board.getCells().forEach(this::addCellToBoard);
 
@@ -109,6 +108,14 @@ public class BoardgameController extends Controller {
         updateDisks(activeColor);
         activeColor = PlayerColors.RED == activeColor ? PlayerColors.BLUE : PlayerColors.RED;
         updateCells();
+        checkActiveGame(event);
+    }
+
+    @FXML
+    private void checkActiveGame(MouseEvent event){
+        if(!boardService.playerWon()){
+            changeToScreen("TopList.fxml", event);
+        }
     }
 
 
@@ -201,9 +208,9 @@ public class BoardgameController extends Controller {
     private void updateCell(StackPane cell) {
 
         Optional<BoardCell> boardCell = board.getCells().stream()
-                .filter(boardcell -> boardcell.getRowIndex() == GridPane.getRowIndex(cell) &&
-                        boardcell.getColumnIndex() == GridPane.getColumnIndex(cell))
-                .findAny();
+                                                .filter(boardcell -> boardcell.getRowIndex() == GridPane.getRowIndex(cell) &&
+                                                                        boardcell.getColumnIndex() == GridPane.getColumnIndex(cell))
+                                                .findAny();
 
         if (boardCell.isPresent()) {
             if (boardCell.get().isRestrictedCell()) {
@@ -216,10 +223,10 @@ public class BoardgameController extends Controller {
                 cell.getStyleClass().remove("available-step");
 
                 boolean hasDisk = board.getCellsWithDisks(activeColor)
-                        .contains(BoardCell.builder()
-                                .rowIndex(GridPane.getRowIndex(cell))
-                                .columnIndex(GridPane.getColumnIndex(cell)
-                                ).build());
+                                        .contains(BoardCell.builder()
+                                        .rowIndex(GridPane.getRowIndex(cell))
+                                        .columnIndex(GridPane.getColumnIndex(cell))
+                                        .build());
 
                 if (!cell.getStyleClass().contains("disk") && hasDisk) {
                     cell.getStyleClass().add("disk");
