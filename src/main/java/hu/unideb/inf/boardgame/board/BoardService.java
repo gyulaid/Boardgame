@@ -4,16 +4,14 @@ import hu.unideb.inf.boardgame.player.Player;
 import hu.unideb.inf.boardgame.player.PlayerCache;
 import hu.unideb.inf.boardgame.player.PlayerColors;
 import hu.unideb.inf.boardgame.player.PlayerService;
-import javafx.scene.layout.GridPane;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
- * Class for board service
+ * Class for board service.
  */
 @Slf4j
 public class BoardService {
@@ -25,15 +23,23 @@ public class BoardService {
     PlayerService playerService = new PlayerService();
     Player currentPlayer = PlayerCache.getPlayerInstance(PlayerColors.BLUE);
 
-
-
+    /**
+     * Constructor with a parameter.
+     *
+     * @param board Board object to operate on
+     */
     public BoardService(Board board) {
         this.board = board;
     }
 
-
-    public boolean playerWon(){
-
+    /**
+     * Checks if the game is active.
+     * Updates players' data if the game is over.
+     *
+     * @return {@code true} if a player is able to move, {@code false} otherwise
+     */
+    public boolean isGameActive() {
+        log.info("Checking if a player won");
         int possibleRedSteps = 0;
         int possibleBlueSteps = 0;
 
@@ -49,27 +55,23 @@ public class BoardService {
             }
         }
 
-        if(possibleBlueSteps == 0){
+        if (possibleBlueSteps == 0) {
             playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.BLUE).getUserName(), "Lost");
             playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.RED).getUserName(), "Won");
-        } else if(possibleRedSteps == 0){
-                playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.BLUE).getUserName(), "Won");
-                playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.RED).getUserName(), "Lost");
+            log.info("Game over");
+        } else if (possibleRedSteps == 0) {
+            playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.BLUE).getUserName(), "Won");
+            playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.RED).getUserName(), "Lost");
+            log.info("Game over");
         }
 
 
         return possibleRedSteps != 0 && possibleBlueSteps != 0;
     }
 
-    public void setCurrentPlayer(Player player){
-        currentPlayer = player;
-    }
-
-
-
 
     /**
-     * Checks the available steps from the cell of given parameters
+     * Checks the available steps from the cell of given parameters.
      *
      * @param row    Integer value of the row index of the cell to check
      * @param column Integer value of the column index of the cell to check
@@ -87,7 +89,7 @@ public class BoardService {
 
             switch (color) {
                 case BLUE:
-                    cellForward = board.getCell(row-1, column);
+                    cellForward = board.getCell(row - 1, column);
                     cellDiagonalRightForward = board.getCell(row - 1, column + 1);
                     cellDiagonalLeftForward = board.getCell(row - 1, column - 1);
 
@@ -125,14 +127,14 @@ public class BoardService {
 
     /**
      * Selects the cell with the parameter indexes.
-     * Sets the SELECTED_CELL to the boardCell with the given indexes
+     * Sets the SELECTED_CELL to the boardCell with the given indexes.
      *
      * @param row    Integer value of the row index of selected cell
      * @param column Integer value of the column index of selected cell
      */
     public void selectCell(int row, int column) {
 
-        if (board.getCell(row,column).getDiskInCell() != null &&
+        if (board.getCell(row, column).getDiskInCell() != null &&
                 board.getCell(row, column).getDiskInCell().getOwnerColor() == currentPlayer.getColor()) {
 
             board.getCells().forEach(boardcell -> {
@@ -152,7 +154,7 @@ public class BoardService {
     }
 
     /**
-     * Moves the disk from the selected cell to the given parameters
+     * Moves the disk from the selected cell to the given parameters.
      *
      * @param row    Integer value of the row index of the destination
      * @param column Integer value of the column index of the destination

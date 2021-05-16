@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
- * Class for the disks
+ * Class for the disks.
  */
 @Data
 @AllArgsConstructor

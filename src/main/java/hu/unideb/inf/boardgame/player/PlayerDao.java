@@ -11,7 +11,7 @@ import java.util.List;
 
 
 /**
- * Data access object to the database of users
+ * Data access object to the database of users.
  */
 @Slf4j
 public class PlayerDao {
@@ -19,7 +19,7 @@ public class PlayerDao {
     private final ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 
     /**
-     * Gets all the users from the database
+     * Gets all the users from the database.
      *
      * @return a list of player objects, may return an {@code ArrayList<>()}
      */
@@ -29,13 +29,13 @@ public class PlayerDao {
         try {
             return objectMapper.readValue(getClass().getClassLoader().getResourceAsStream("players.json"), ref);
         } catch (Exception e) {
-            log.error("Error occured during reading file ");
+            log.error("Error occured during reading file: {}", e.getMessage());
         }
         return new ArrayList<>();
     }
 
     /**
-     * Saves a player to the database
+     * Saves a player to the database.
      *
      * @param playerToSave a player object to save
      */
@@ -53,16 +53,19 @@ public class PlayerDao {
             log.info("Write file");
 
         } catch (Exception ex) {
-            log.error("Exception caught {}", ex);
-            System.out.println("uzenet" + ex.getMessage());
+            log.error("Exception caught {}", ex.getMessage());
         }
     }
 
-
+    /**
+     * Deletes a player from the database.
+     *
+     * @param playerToDelete Player object to delete
+     */
     public void deletePlayer(Player playerToDelete) {
         try {
             List<Player> players = getPlayers();
-
+            log.info("Deleting player");
             players.remove(playerToDelete);
 
             FileWriter writer = new FileWriter(getClass().getClassLoader().getResource("players.json").getPath());
@@ -72,38 +75,46 @@ public class PlayerDao {
             log.info("Write file");
 
         } catch (Exception ex) {
-            log.error("Exception caught {}", ex);
-            System.out.println("uzenet" + ex.getMessage());
+            log.error("Exception caught {}", ex.getMessage());
         }
     }
 
 
     /**
-     * Search in the database by username
+     * Search in the database by username.
      *
      * @param userName String representing the username to find
      * @return {@code Player} object with the given username
      */
     public Player searchByUserName(String userName) {
         List<Player> playerList = getPlayers();
-        for (int i = 0; i < playerList.size(); i++) {
-            if (playerList.get(i).getUserName().equals(userName)) {
-                return playerList.get(i);
+        for (Player player : playerList) {
+            if (player.getUserName().equals(userName)) {
+                return player;
             }
         }
         return null;
     }
 
-    public void updatePlayer(String userName, String Result) {
+
+    /**
+     * Updates a player's win/lose data.
+     *
+     * @param userName String representing the username of the player
+     * @param result   String representing if the player won or lost
+     */
+    public void updatePlayer(String userName, String result) {
         try {
             List<Player> players = getPlayers();
             Player playerToUpdate = searchByUserName(userName);
             Player updatedPlayer = searchByUserName(userName);
 
-            if(Result.equals("Won")){
+            if (result.equals("Won")) {
                 updatedPlayer.setAmountOfWins(updatedPlayer.getAmountOfWins() + 1);
-            } else if(Result.equals("Lost"))            {
+                log.info("Updateing player win");
+            } else if (result.equals("Lost")) {
                 updatedPlayer.setAmountOfLosses(playerToUpdate.getAmountOfLosses() + 1);
+                log.info("Updating player loss");
             }
 
             players.set(players.indexOf(playerToUpdate), updatedPlayer);
@@ -115,8 +126,7 @@ public class PlayerDao {
             log.info("Write file");
 
         } catch (Exception ex) {
-            log.error("Exception caught {}", ex);
-            System.out.println("uzenet" + ex.getMessage());
+            log.error("Exception caught {}", ex.getMessage());
         }
     }
 

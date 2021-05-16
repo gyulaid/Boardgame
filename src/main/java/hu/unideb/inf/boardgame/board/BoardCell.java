@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 
 
 /**
- * Class for the cells of the gameboard
+ * Class for the cells of the gameboard.
  */
 @AllArgsConstructor
 @Builder
@@ -28,7 +28,7 @@ public class BoardCell {
     private boolean selected;
 
     /**
-     * Default constructor to construct empty cell
+     * Default constructor to construct empty cell.
      */
     public BoardCell() {
         selected = false;
@@ -40,7 +40,7 @@ public class BoardCell {
 
 
     /**
-     * Checks if the cell is available to step on
+     * Checks if the cell is available to step on.
      *
      * @param color {@code PlayerColors} value of the stepping disk
      * @return Boolean value true, if the cell is available to step on, false if not
@@ -53,18 +53,13 @@ public class BoardCell {
 
 
     /**
-     * Checks if the cell is empty and not restricted
+     * Checks if the cell is empty and not restricted.
      *
      * @return Boolean value true, if the cell is empty and not restricted, false otherwise
      */
     public boolean isEmpty() {
         return !isRestrictedCell && diskInCell == null;
     }
-
-
-
-
-
 
 
 }

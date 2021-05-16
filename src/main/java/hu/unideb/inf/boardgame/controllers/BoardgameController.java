@@ -1,4 +1,4 @@
-package hu.unideb.inf.boardgame;
+package hu.unideb.inf.boardgame.controllers;
 
 import hu.unideb.inf.boardgame.board.Board;
 import hu.unideb.inf.boardgame.board.BoardCell;
@@ -13,12 +13,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-
+/**
+ * Controller of the game UI.
+ */
+@Slf4j
 public class BoardgameController extends Controller {
 
 
@@ -26,7 +30,9 @@ public class BoardgameController extends Controller {
     private Board board;
     private final BoardService boardService;
 
-
+    /**
+     * Default constructor.
+     */
     public BoardgameController() {
         board = new Board.BoardBuilder().boardSize(6, 7)
                 .restrictedZone(2, 4)
@@ -68,6 +74,8 @@ public class BoardgameController extends Controller {
 
     private void addCellToBoard(BoardCell boardCell) {
         StackPane cell = new StackPane();
+
+        log.info("Addig cell to board in UI");
 
         if (boardCell.isRestrictedCell()) {
             cell.getStyleClass().add("restricted");
@@ -113,14 +121,17 @@ public class BoardgameController extends Controller {
     }
 
     @FXML
-    private void checkActiveGame(MouseEvent event){
-        if(!boardService.playerWon()){
+    private void checkActiveGame(MouseEvent event) {
+        log.info("Checking active game");
+        if (!boardService.isGameActive()) {
+            log.info("Game over");
             changeToScreen("TopList.fxml", event);
         }
     }
 
 
     private void updateCells() {
+        log.info("Updating cells in UI");
         gameboard.getChildren()
                 .stream()
                 .filter(children -> children instanceof StackPane)
@@ -129,10 +140,11 @@ public class BoardgameController extends Controller {
 
         updateAvailableCells();
 
+        log.info("Cells updated in UI");
     }
 
     private void updateAvailableCells() {
-
+        log.info("Updating available cells on UI");
         BoardCell selectedCell = board.getSelectedCell();
         if (Objects.nonNull(selectedCell)) {
 
@@ -209,9 +221,9 @@ public class BoardgameController extends Controller {
     private void updateCell(StackPane cell) {
 
         Optional<BoardCell> boardCell = board.getCells().stream()
-                                                .filter(boardcell -> boardcell.getRowIndex() == GridPane.getRowIndex(cell) &&
-                                                                        boardcell.getColumnIndex() == GridPane.getColumnIndex(cell))
-                                                .findAny();
+                .filter(boardcell -> boardcell.getRowIndex() == GridPane.getRowIndex(cell) &&
+                        boardcell.getColumnIndex() == GridPane.getColumnIndex(cell))
+                .findAny();
 
         if (boardCell.isPresent()) {
             if (boardCell.get().isRestrictedCell()) {
@@ -224,10 +236,10 @@ public class BoardgameController extends Controller {
                 cell.getStyleClass().remove("available-step");
 
                 boolean hasDisk = board.getCellsWithDisks(activeColor)
-                                        .contains(BoardCell.builder()
-                                        .rowIndex(GridPane.getRowIndex(cell))
-                                        .columnIndex(GridPane.getColumnIndex(cell))
-                                        .build());
+                        .contains(BoardCell.builder()
+                                .rowIndex(GridPane.getRowIndex(cell))
+                                .columnIndex(GridPane.getColumnIndex(cell))
+                                .build());
 
                 if (!cell.getStyleClass().contains("disk") && hasDisk) {
                     cell.getStyleClass().add("disk");
@@ -241,8 +253,8 @@ public class BoardgameController extends Controller {
         }
 
         cell.setOnMouseClicked(this::handleSelectClick);
-    }
 
+    }
 }
 
 

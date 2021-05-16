@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane fx:id="MainMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.inf.boardgame.MainMenuController">
+<Pane fx:id="MainMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.inf.boardgame.controllers.MainMenuController">
     <children>
         <TextField fx:id="playerBlue" layoutX="45.0" layoutY="80.0" prefHeight="33.0" prefWidth="170.0" />
         <PasswordField fx:id="playerBluePassword" layoutX="45.0" layoutY="130.0" prefHeight="33.0" prefWidth="170.0" />

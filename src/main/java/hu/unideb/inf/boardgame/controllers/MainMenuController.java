@@ -1,4 +1,4 @@
-package hu.unideb.inf.boardgame;
+package hu.unideb.inf.boardgame.controllers;
 
 import hu.unideb.inf.boardgame.player.PlayerCache;
 import hu.unideb.inf.boardgame.player.PlayerService;
@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 /**
- * Controller of the main menu view
+ * Controller of the main menu view.
  */
 public class MainMenuController extends Controller {
 
@@ -33,24 +33,23 @@ public class MainMenuController extends Controller {
     private PasswordField playerBluePassword;
 
 
-
     @FXML
     void onInstructions(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Instructions");
         alert.setHeaderText("Boardgame instructions");
-        alert.setContentText("This is a simple, chess-like boardgame\n"+
-                            "If you have not registered yet,\n"+
-                            "You need to, to play the game.\n"+
-                            "After that you can choose a side, Blue or Red.\n"+
-                            "\n"+
-                            "Rules of the game:\n"+
-                            "There are two restricted zones you can not step on.\n"+
-                            "You can only step forward and diagonally.\n"+
-                            "If you are willing to step diagonally, and there is\n"+
-                            "an enemy Disk on the chosen square, \n"+
-                            "then the enemy's disk will be removed from the table.\n"+
-                            "The first player who can't make more moves loses.\n");
+        alert.setContentText("This is a simple, chess-like boardgame\n" +
+                "If you have not registered yet,\n" +
+                "You need to, to play the game.\n" +
+                "After that you can choose a side, Blue or Red.\n" +
+                "\n" +
+                "Rules of the game:\n" +
+                "There are two restricted zones you can not step on.\n" +
+                "You can only step forward and diagonally.\n" +
+                "If you are willing to step diagonally, and there is\n" +
+                "an enemy Disk on the chosen square, \n" +
+                "then the enemy's disk will be removed from the table.\n" +
+                "The first player who can't make more moves loses.\n");
         alert.showAndWait();
     }
 
@@ -88,9 +87,6 @@ public class MainMenuController extends Controller {
     void onRegister(ActionEvent event) {
         changeToScreen("SignUpPage.fxml", event);
     }
-
-
-
 
 
 }

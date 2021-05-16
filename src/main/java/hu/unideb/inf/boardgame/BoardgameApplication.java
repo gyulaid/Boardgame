@@ -10,13 +10,13 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
- * Application class for the game
+ * Application class for the game.
  */
 public class BoardgameApplication extends Application {
 
 
     /**
-     * Starts the main screen of the application
+     * Starts the main screen of the application.
      *
      * @param stage .
      * @throws IOException if any I/O error occurs

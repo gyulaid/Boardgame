@@ -16,13 +16,13 @@ public class PlayerService {
 
 
     /**
-     * Creates connection to the database {@code PlayerDao}
+     * Creates connection to the database {@code PlayerDao}.
      */
     private PlayerDao playerDao = new PlayerDao();
 
 
     /**
-     * Creates a new user and adds it to the database
+     * Creates a new user and adds it to the database.
      *
      * @param userName string representing the username of the user
      * @param password string representing the password of the user
@@ -45,7 +45,7 @@ public class PlayerService {
 
 
     /**
-     * Searches a user in the database based on the username
+     * Searches a user in the database based on the username.
      *
      * @param userName username of the searched player
      * @return a boolean true or false
@@ -57,13 +57,21 @@ public class PlayerService {
         return playerDao.searchByUserName(userName) != null;
     }
 
+
+    /**
+     * Returns the user's data.
+     *
+     * @param userName String as the username of the player
+     * @return Player object with the matching username
+     */
     public Player getPlayerData(String userName) {
+        log.info("Getting player from database");
         return playerDao.searchByUserName(userName);
     }
 
 
     /**
-     * Checks if the given username and password is valid
+     * Checks if the given username and password is valid.
      *
      * @param userName username of the user
      * @param password password of the user
@@ -82,15 +90,28 @@ public class PlayerService {
         throw new InvalidUserException(color + " player has entered invalid username/password");
     }
 
-
+    /**
+     * Getter for the toplist ordered by the Win/Lose ratio of the players.
+     *
+     * @return List of players sorted
+     */
     public List<Player> getTopList() {
+        log.info("Creating top list;");
         return playerDao.getPlayers()
-                        .stream()
-                        .sorted(Comparator.comparing(Player::winPerLoseRatio).reversed())
-                        .collect(Collectors.toList());
+                .stream()
+                .sorted(Comparator.comparing(Player::winPerLoseRatio).reversed())
+                .collect(Collectors.toList());
     }
 
-    public void updatePlayers(String userName, String result){
+
+    /**
+     * Updates a player's win/lose data.
+     *
+     * @param userName String representing the username of the player
+     * @param result   String representing the outcome of the game of the player
+     */
+    public void updatePlayers(String userName, String result) {
+        log.info("Updateing player data");
         playerDao.updatePlayer(userName, result);
     }
 

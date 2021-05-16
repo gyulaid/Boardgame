@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Class of the gameboard
+ * Class of the gameboard.
  */
 @Slf4j
 @Data

@@ -3,7 +3,7 @@ package hu.unideb.inf.boardgame.player;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Class for caching the logged in players
+ * Class for caching the logged in players.
  */
 @Slf4j
 public class PlayerCache {
@@ -16,7 +16,7 @@ public class PlayerCache {
 
 
     /**
-     * Returns an instance of a player
+     * Returns an instance of a player.
      *
      * @param color PlayerColor value representing the color of the player
      * @return Player object of the given color from the current players
@@ -33,7 +33,7 @@ public class PlayerCache {
     }
 
     /**
-     * Initializes the instance of the red player
+     * Initializes the instance of the red player.
      *
      * @param player Player to be the red instance
      */
@@ -44,7 +44,7 @@ public class PlayerCache {
 
 
     /**
-     * Initializes the instance of the blue player
+     * Initializes the instance of the blue player.
      *
      * @param player Player to be the blue instance
      */

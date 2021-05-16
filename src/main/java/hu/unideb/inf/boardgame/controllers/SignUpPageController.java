@@ -1,4 +1,4 @@
-package hu.unideb.inf.boardgame;
+package hu.unideb.inf.boardgame.controllers;
 
 import hu.unideb.inf.boardgame.player.InvalidUserException;
 import hu.unideb.inf.boardgame.player.PlayerService;
@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 /**
- * Controller of the sign up page view
+ * Controller of the sign up page view.
  */
 public class SignUpPageController extends Controller {
 
