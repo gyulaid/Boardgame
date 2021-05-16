@@ -1,10 +1,13 @@
 package hu.unideb.inf.boardgame.board;
 
 import hu.unideb.inf.boardgame.player.PlayerColors;
+import javafx.scene.layout.GridPane;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Class for board service
@@ -15,7 +18,7 @@ public class BoardService {
 
     Board board;
 
-    public BoardService(Board board){
+    public BoardService(Board board) {
         this.board = board;
     }
 
@@ -27,44 +30,45 @@ public class BoardService {
      * @param column Integer value of the column index of the cell to check
      * @return List of the cells that are free to step on
      */
-    public List getAvailableSteps(int row, int column) {
-        List availableCells = new ArrayList();
+    public List<BoardCell> getAvailableSteps(int row, int column) {
+        List<BoardCell> availableCells = new ArrayList<>();
         BoardCell cellForward;
         BoardCell cellDiagonalRightForward;
         BoardCell cellDiagonalLeftForward;
 
 
-        if (board.getBoardCells()[row][column].getDiskInCell() != null) {
-            PlayerColors color = board.getBoardCells()[row][column].getDiskInCell().getOwnerColor();
+        if (board.getDiskInCell(row, column) != null) {
+            PlayerColors color = board.getDiskInCell(row, column).getOwnerColor();
 
             switch (color) {
                 case BLUE:
-                    cellForward = board.getBoardCells()[row - 1][column];
-                    cellDiagonalRightForward = board.getBoardCells()[row - 1][column + 1];
-                    cellDiagonalLeftForward = board.getBoardCells()[row - 1][column - 1];
+                    cellForward = board.getCell(row-1, column);
+                    cellDiagonalRightForward = board.getCell(row - 1, column + 1);
+                    cellDiagonalLeftForward = board.getCell(row - 1, column - 1);
 
-                    if (cellForward.isEmpty()) {
+                    if (Objects.nonNull(cellForward) && cellForward.isEmpty()) {
                         availableCells.add(cellForward);
                     }
-                    if (cellDiagonalLeftForward.isSteppable(color)) {
+                    if (Objects.nonNull(cellDiagonalLeftForward) && cellDiagonalLeftForward.isSteppable(color)) {
                         availableCells.add(cellDiagonalLeftForward);
                     }
-                    if (cellDiagonalRightForward.isSteppable(color)) {
+                    if (Objects.nonNull(cellDiagonalRightForward) && cellDiagonalRightForward.isSteppable(color)) {
                         availableCells.add(cellDiagonalRightForward);
                     }
                     break;
-                case RED:
-                    cellForward = board.getBoardCells()[row + 1][column];
-                    cellDiagonalRightForward = board.getBoardCells()[row + 1][column + 1];
-                    cellDiagonalLeftForward = board.getBoardCells()[row + 1][column - 1];
 
-                    if (cellForward.isEmpty()) {
+                case RED:
+                    cellForward = board.getCell(row + 1, column);
+                    cellDiagonalRightForward = board.getCell(row + 1, column + 1);
+                    cellDiagonalLeftForward = board.getCell(row + 1, column - 1);
+
+                    if (Objects.nonNull(cellForward) && cellForward.isEmpty()) {
                         availableCells.add(cellForward);
                     }
-                    if (cellDiagonalLeftForward.isSteppable(color)) {
+                    if (Objects.nonNull(cellDiagonalLeftForward) && cellDiagonalLeftForward.isSteppable(color)) {
                         availableCells.add(cellDiagonalLeftForward);
                     }
-                    if (cellDiagonalRightForward.isSteppable(color)) {
+                    if (Objects.nonNull(cellDiagonalRightForward) && cellDiagonalRightForward.isSteppable(color)) {
                         availableCells.add(cellDiagonalRightForward);
                     }
                     break;
@@ -83,13 +87,20 @@ public class BoardService {
      */
     public void selectCell(int row, int column) {
 
-        if (board.getSelectedCell() == null) {
-            log.debug("Selected Cell (" + row + ", " + column + ")");
-            board.setSelectedCell(board.getBoardCells()[row][column]);
-        } else {
-            log.debug("Unselected cell");
-            board.setSelectedCell(null);
-        }
+        board.getCells().forEach(boardcell -> {
+            if (boardcell.getRowIndex() == row &&
+                    boardcell.getColumnIndex() == column &&
+                    boardcell.getDiskInCell() != null) {
+                if (boardcell.isSelected()) {
+                    boardcell.setSelected(false);
+                } else {
+                    boardcell.setSelected(true);
+                }
+            } else {
+                boardcell.setSelected(false);
+            }
+        });
+
     }
 
 
@@ -100,16 +111,17 @@ public class BoardService {
      * @param column Integer value of the column index of the destination
      */
     public void stepTo(int row, int column) {
-        if (getAvailableSteps(board.getSelectedCell().getRowIndex(), board.getSelectedCell().getColumnIndex()).contains(board.getBoardCells()[row][column])) {
 
-            board.getBoardCells()[row][column].setDiskInCell(board.getSelectedCell().getDiskInCell());
-            board.setSelectedCell(null);
 
+        if (Objects.nonNull(board.getSelectedCell()) &&
+                getAvailableSteps(board.getSelectedCell().getRowIndex(), board.getSelectedCell().getColumnIndex()).contains(board.getCell(row, column))) {
             log.debug("Step from (" + board.getSelectedCell().getRowIndex() + ", " +
                     board.getSelectedCell().getColumnIndex() + ") " + "to (" + row + ", " + column + ")");
+            board.getCell(row, column).setDiskInCell(board.getSelectedCell().getDiskInCell());
+            board.getSelectedCell().setDiskInCell(null);
+            board.getSelectedCell().setSelected(false);
         }
     }
-
 
 
 }

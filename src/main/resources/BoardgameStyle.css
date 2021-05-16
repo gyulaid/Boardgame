@@ -3,6 +3,19 @@
     -fx-background-color: white;
 }
 
-.cell:hover {
+
+.disk:hover {
     -fx-background-color: whitesmoke;
+}
+
+.restricted {
+    -fx-background-color: black;
+}
+
+.selected {
+    -fx-background-color: lightpink;
+}
+
+.available-step {
+    -fx-background-color: yellow;
 }

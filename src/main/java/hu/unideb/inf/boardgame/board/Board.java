@@ -2,11 +2,14 @@ package hu.unideb.inf.boardgame.board;
 
 import hu.unideb.inf.boardgame.disk.Disk;
 import hu.unideb.inf.boardgame.player.PlayerColors;
+import javafx.scene.layout.GridPane;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Class of the gameboard
@@ -16,11 +19,51 @@ import java.util.List;
 public class Board {
 
 
-    private List<List<BoardCell>> cells;
-    private BoardCell[][] boardCells;
+    private List<BoardCell> cells;
     private int ROWS_OF_BOARD;
     private int COLUMNS_OF_BOARD;
-    private BoardCell selectedCell;
+
+
+    public List<BoardCell> getCellsWithDisks() {
+
+        return cells.stream()
+                .filter(cell -> cell.getDiskInCell() != null)
+                .collect(Collectors.toList());
+    }
+
+    public List<BoardCell> getCellsWithDisks(PlayerColors color) {
+
+        return cells.stream()
+                .filter(cell -> cell.getDiskInCell() != null &&
+                        cell.getDiskInCell().getOwnerColor() == color)
+                .collect(Collectors.toList());
+    }
+
+
+    public BoardCell getCell(int row, int column) {
+        return getCells().stream()
+                .filter(boardcell -> boardcell.getRowIndex() == row &&
+                        boardcell.getColumnIndex() == column)
+                .findAny().orElse(null);
+    }
+
+
+    public Disk getDiskInCell(int row, int column) {
+        return getCells().stream()
+                .filter(boardcell -> boardcell.getRowIndex() == row &&
+                        boardcell.getColumnIndex() == column)
+                .map(BoardCell::getDiskInCell)
+                .findAny().orElse(null);
+    }
+
+    public BoardCell getSelectedCell() {
+        return cells.stream()
+                .filter(BoardCell::isSelected)
+                .findAny()
+                .orElse(null);
+
+    }
+
 
     /*
         /**
@@ -156,71 +199,72 @@ public class Board {
 
     public static class BoardBuilder {
 
-        private List<List<BoardCell>> cells = new ArrayList<>();
-        private BoardCell[][] boardCells;
+        private List<BoardCell> cells = new ArrayList<>();
+        private List<BoardCell> restrictedCells = new ArrayList<>();
         private int ROWS_OF_BOARD;
         private int COLUMNS_OF_BOARD;
 
 
-    public BoardBuilder boardSize(int rowSize, int columnSize){
-        ROWS_OF_BOARD = rowSize;
-        COLUMNS_OF_BOARD = columnSize;
-        boardCells = new BoardCell[rowSize][columnSize];
+        public BoardBuilder boardSize(int rowSize, int columnSize) {
+            ROWS_OF_BOARD = rowSize;
+            COLUMNS_OF_BOARD = columnSize;
 
-        for (int i = 0; i < ROWS_OF_BOARD; i++) {
-
-            cells.add(new ArrayList<BoardCell>());
-
-            for (int j = 0; j < COLUMNS_OF_BOARD; j++) {
-
-                cells.get(i).add(new BoardCell());
-                cells.get(i).get(j).setRowIndex(i);
-                cells.get(i).get(j).setColumnIndex(j);
-            }
+            return this;
         }
-        initDisks(COLUMNS_OF_BOARD);
-        return this;
-    }
 
-        private void initCellIndexes() {
+        private boolean isRestrictedCell(int row, int col) {
+            return restrictedCells.contains(BoardCell.builder()
+                    .rowIndex(row)
+                    .columnIndex(col).build());
+        }
+
+        private Disk createDiskByRowIndex(int rowIndex) {
+            if (rowIndex == 0) {
+                return new Disk(PlayerColors.RED);
+            } else if (rowIndex == ROWS_OF_BOARD - 1) {
+                return new Disk(PlayerColors.BLUE);
+            }
+            return null;
+        }
+
+
+        public BoardBuilder restrictedZone(int rowIndex, int columnIndex) {
+            BoardCell restrictedCell = BoardCell.builder()
+                    .rowIndex(rowIndex)
+                    .columnIndex(columnIndex)
+                    .build();
+
+            restrictedCells.add(restrictedCell);
+
+            return this;
+        }
+
+        public Board build() {
+            Board board = new Board();
+
             for (int i = 0; i < ROWS_OF_BOARD; i++) {
                 for (int j = 0; j < COLUMNS_OF_BOARD; j++) {
 
-                    boardCells[i][j].setRowIndex(i);
-                    boardCells[i][j].setColumnIndex(j);
+                    BoardCell newCell = BoardCell.builder()
+                            .rowIndex(i)
+                            .columnIndex(j)
+                            .isRestrictedCell(isRestrictedCell(i, j))
+                            .diskInCell(createDiskByRowIndex(i))
+                            .build();
+
+                    cells.add(newCell);
                 }
             }
+
+            board.setCells(this.cells);
+            board.setROWS_OF_BOARD(this.ROWS_OF_BOARD);
+            board.setCOLUMNS_OF_BOARD(this.COLUMNS_OF_BOARD);
+
+
+            return board;
         }
 
-
-        private void initDisks(int amountOfDisksPerPlayer) {
-
-            for (int i = 0; i < amountOfDisksPerPlayer; i++) {
-                cells.get(0).get(i).setDiskInCell(new Disk(PlayerColors.RED));
-                log.debug("RED disk placed down");
-                cells.get(ROWS_OF_BOARD - 1).get(i).setDiskInCell(new Disk(PlayerColors.RED));
-                log.debug("BLUE disk placed down");
-            }
-        }
-
-
-        public BoardBuilder restrictedZone(int rowIndex, int columnIndex){
-        cells.get(rowIndex).get(columnIndex).setRestrictedCell(true);
-        return this;
     }
-
-    public Board build(){
-        Board board = new Board();
-        board.ROWS_OF_BOARD = this.ROWS_OF_BOARD;
-        board.COLUMNS_OF_BOARD = this.COLUMNS_OF_BOARD;
-        board.cells = this.cells;
-        board.selectedCell = null;
-        return board;
-    }
-
-    }
-
-
 
 
 }
