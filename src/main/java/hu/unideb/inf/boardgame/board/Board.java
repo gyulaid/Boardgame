@@ -22,12 +22,6 @@ public class Board {
     private int COLUMNS_OF_BOARD;
 
 
-    public List<BoardCell> getCellsWithDisks() {
-
-        return cells.stream()
-                .filter(cell -> cell.getDiskInCell() != null)
-                .collect(Collectors.toList());
-    }
 
     public List<BoardCell> getCellsWithDisks(PlayerColors color) {
 

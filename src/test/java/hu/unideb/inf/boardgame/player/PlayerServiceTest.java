@@ -1,6 +1,7 @@
 package hu.unideb.inf.boardgame.player;
 
 
+import hu.unideb.inf.boardgame.gameresults.GameResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -80,19 +82,47 @@ public class PlayerServiceTest {
     }
 
     @Test
-    public void validateLoginShouldSucceedWhenPlayerExists(){
+    public void updatePlayersShouldSucceedWhenPlayerIsNotNull() {
 
         Player testPlayer = new Player();
-        testPlayer.setUserName("TestName");
+        testPlayer.setUserName("TestPlayer");
         testPlayer.setPassword("TestPassword");
 
-        try {
-            playerService.validateLogIn(testPlayer.getUserName(), testPlayer.getPassword(), "TestColor");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
 
-        verify(playerDao).searchByUserName(any(String.class));
+        playerService.updatePlayers(testPlayer.getUserName(),  GameResult.WON);
+
+        verify(playerDao).updatePlayer(any(String.class), any(GameResult.class));
+
+
+
     }
+
+    @Test
+    public void getTopListShouldSucceedWhenPlayerListIsNotNull() {
+
+        Player testPlayer = new Player();
+        testPlayer.setUserName("Test");
+
+        List<Player> players = new ArrayList<>();
+        players.add(testPlayer);
+
+        when(playerService.getTopList()).thenReturn(players.stream().sorted().collect(Collectors.toList()));
+
+        List<Player> checkPlayers = playerService.getTopList();
+
+        verify(playerDao).getPlayers();
+
+        Assertions.assertFalse(checkPlayers.isEmpty());
+
+        Assertions.assertEquals(testPlayer, players.get(0));
+
+
+
+    }
+
+
+
+
+
 
 }

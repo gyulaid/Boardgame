@@ -3,6 +3,7 @@ package hu.unideb.inf.boardgame.player;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import hu.unideb.inf.boardgame.gameresults.GameResult;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileWriter;
@@ -103,16 +104,16 @@ public class PlayerDao {
      * @param userName String representing the username of the player
      * @param result   String representing if the player won or lost
      */
-    public void updatePlayer(String userName, String result) {
+    public void updatePlayer(String userName, GameResult result) {
         try {
             List<Player> players = getPlayers();
             Player playerToUpdate = searchByUserName(userName);
             Player updatedPlayer = searchByUserName(userName);
 
-            if (result.equals("Won")) {
+            if (result.equals(GameResult.WON)) {
                 updatedPlayer.setAmountOfWins(updatedPlayer.getAmountOfWins() + 1);
                 log.info("Updateing player win");
-            } else if (result.equals("Lost")) {
+            } else if (result.equals(GameResult.LOST)) {
                 updatedPlayer.setAmountOfLosses(playerToUpdate.getAmountOfLosses() + 1);
                 log.info("Updating player loss");
             }

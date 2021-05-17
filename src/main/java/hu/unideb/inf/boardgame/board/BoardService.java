@@ -1,5 +1,6 @@
 package hu.unideb.inf.boardgame.board;
 
+import hu.unideb.inf.boardgame.gameresults.GameResult;
 import hu.unideb.inf.boardgame.player.Player;
 import hu.unideb.inf.boardgame.player.PlayerCache;
 import hu.unideb.inf.boardgame.player.PlayerColors;
@@ -56,12 +57,12 @@ public class BoardService {
         }
 
         if (possibleBlueSteps == 0) {
-            playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.BLUE).getUserName(), "Lost");
-            playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.RED).getUserName(), "Won");
+            playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.BLUE).getUserName(), GameResult.LOST);
+            playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.RED).getUserName(), GameResult.WON);
             log.info("Game over");
         } else if (possibleRedSteps == 0) {
-            playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.BLUE).getUserName(), "Won");
-            playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.RED).getUserName(), "Lost");
+            playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.BLUE).getUserName(), GameResult.WON);
+            playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.RED).getUserName(), GameResult.LOST);
             log.info("Game over");
         }
 

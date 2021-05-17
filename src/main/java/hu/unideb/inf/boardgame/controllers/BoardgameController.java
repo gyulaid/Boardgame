@@ -243,11 +243,15 @@ public class BoardgameController extends Controller {
 
                 if (!cell.getStyleClass().contains("disk") && hasDisk) {
                     cell.getStyleClass().add("disk");
-
                 }
+                else if(cell.getStyleClass().contains("disk") && !hasDisk){
+                    cell.getStyleClass().remove("disk");
+                }
+
             } else {
                 cell.getStyleClass().remove("selected");
                 cell.getStyleClass().remove("available-step");
+
 
             }
         }

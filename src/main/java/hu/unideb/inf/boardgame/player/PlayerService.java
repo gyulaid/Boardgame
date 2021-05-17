@@ -2,6 +2,7 @@ package hu.unideb.inf.boardgame.player;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import hu.unideb.inf.boardgame.gameresults.GameResult;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Comparator;
@@ -117,7 +118,7 @@ public class PlayerService {
      * @param userName String representing the username of the player
      * @param result   String representing the outcome of the game of the player
      */
-    public void updatePlayers(String userName, String result) {
+    public void updatePlayers(String userName, GameResult result) {
         log.info("Updateing player data");
         playerDao.updatePlayer(userName, result);
     }
