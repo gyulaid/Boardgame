@@ -4,17 +4,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.DecimalFormat;
 
 /**
  * Class for storing data of a player.
  */
-@Slf4j
 @JsonIgnoreProperties(value = {"color"})
 @NoArgsConstructor
 @Data
 public class Player {
+
+    private static Logger log = LoggerFactory.getLogger(Player.class);
 
     /**
      * Username of the player.

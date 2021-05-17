@@ -14,6 +14,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Objects;
@@ -22,10 +24,9 @@ import java.util.Optional;
 /**
  * Controller of the game UI.
  */
-@Slf4j
 public class BoardgameController extends Controller {
 
-
+    private static Logger log = LoggerFactory.getLogger(BoardgameController.class);
     private PlayerColors activeColor;
     private Board board;
     private final BoardService boardService;

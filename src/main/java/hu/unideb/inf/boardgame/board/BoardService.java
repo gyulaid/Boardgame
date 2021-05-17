@@ -5,7 +5,9 @@ import hu.unideb.inf.boardgame.player.Player;
 import hu.unideb.inf.boardgame.player.PlayerCache;
 import hu.unideb.inf.boardgame.player.PlayerColors;
 import hu.unideb.inf.boardgame.player.PlayerService;
-import lombok.extern.slf4j.Slf4j;
+import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,15 +16,17 @@ import java.util.Objects;
 /**
  * Class for board service.
  */
-@Slf4j
 public class BoardService {
 
+    private static Logger log = LoggerFactory.getLogger(BoardService.class);
 
-    Board board;
-    Player bluePlayer = PlayerCache.getPlayerInstance(PlayerColors.BLUE);
-    Player redPlayer = PlayerCache.getPlayerInstance(PlayerColors.RED);
-    PlayerService playerService = new PlayerService();
-    Player currentPlayer = PlayerCache.getPlayerInstance(PlayerColors.BLUE);
+
+    private Board board;
+    private Player bluePlayer = PlayerCache.getPlayerInstance(PlayerColors.BLUE);
+    private Player redPlayer = PlayerCache.getPlayerInstance(PlayerColors.RED);
+    private PlayerService playerService = new PlayerService();
+    @Setter
+    private Player currentPlayer = PlayerCache.getPlayerInstance(PlayerColors.BLUE);
 
     /**
      * Constructor with a parameter.
@@ -165,8 +169,10 @@ public class BoardService {
 
         if (Objects.nonNull(board.getSelectedCell()) &&
                 getAvailableSteps(board.getSelectedCell().getRowIndex(), board.getSelectedCell().getColumnIndex()).contains(board.getCell(row, column))) {
-            log.debug("Step from (" + board.getSelectedCell().getRowIndex() + ", " +
+
+            log.info("Step from (" + board.getSelectedCell().getRowIndex() + ", " +
                     board.getSelectedCell().getColumnIndex() + ") " + "to (" + row + ", " + column + ")");
+
             board.getCell(row, column).setDiskInCell(board.getSelectedCell().getDiskInCell());
             board.getSelectedCell().setDiskInCell(null);
             board.getSelectedCell().setSelected(false);

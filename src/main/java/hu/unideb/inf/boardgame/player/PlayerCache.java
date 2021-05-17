@@ -1,13 +1,15 @@
 package hu.unideb.inf.boardgame.player;
 
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class for caching the logged in players.
  */
-@Slf4j
 public class PlayerCache {
 
+    private static Logger log = LoggerFactory.getLogger(PlayerCache.class);
     private static Player playerBlueInstance = null;
     private static Player playerRedInstance = null;
 

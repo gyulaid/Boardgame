@@ -1,9 +1,9 @@
 package hu.unideb.inf.boardgame.player;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import hu.unideb.inf.boardgame.gameresults.GameResult;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
 import java.util.List;
@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
  * Service class to communicate with the Dao.
  * Provides service for multiple operations in the players database
  */
-@Slf4j
 public class PlayerService {
 
+    private static Logger log = LoggerFactory.getLogger(PlayerService.class);
 
     /**
      * Creates connection to the database {@code PlayerDao}.
@@ -29,7 +29,7 @@ public class PlayerService {
      *
      * @return List of Player objects from the database
      */
-    public List<Player> getAllPlayers(){
+    public List<Player> getAllPlayers() {
         return playerDao.getPlayers();
     }
 

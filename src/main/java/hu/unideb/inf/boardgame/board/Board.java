@@ -4,6 +4,8 @@ import hu.unideb.inf.boardgame.disk.Disk;
 import hu.unideb.inf.boardgame.player.PlayerColors;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +14,10 @@ import java.util.stream.Collectors;
 /**
  * Class of the gameboard.
  */
-@Slf4j
 @Data
 public class Board {
 
-
+    private static Logger log = LoggerFactory.getLogger(Board.class);
     private List<BoardCell> cells;
     private int ROWS_OF_BOARD;
     private int COLUMNS_OF_BOARD;

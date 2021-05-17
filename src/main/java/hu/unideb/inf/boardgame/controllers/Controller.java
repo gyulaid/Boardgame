@@ -8,14 +8,18 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 /**
  * Basic controller class.
  */
-@Slf4j
 public class Controller {
+
+
+    private static Logger log = LoggerFactory.getLogger(Controller.class);
 
     /**
      * Change to a another view.

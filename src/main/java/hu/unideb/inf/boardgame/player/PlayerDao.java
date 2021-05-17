@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import hu.unideb.inf.boardgame.gameresults.GameResult;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileWriter;
 import java.util.ArrayList;
@@ -14,9 +16,10 @@ import java.util.List;
 /**
  * Data access object to the database of users.
  */
-@Slf4j
 public class PlayerDao {
 
+
+    private static Logger log = LoggerFactory.getLogger(PlayerDao.class);
     private ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 
     /**
@@ -51,7 +54,7 @@ public class PlayerDao {
 
             objectMapper.writeValue(writer, players);
 
-            log.info("Write file");
+            log.debug("Write file");
 
         } catch (Exception ex) {
             log.error("Exception caught {}", ex.getMessage());
