@@ -1,5 +1,7 @@
 package hu.unideb.inf.boardgame.controllers;
 
+import hu.unideb.inf.boardgame.gameresults.GameHistory;
+import hu.unideb.inf.boardgame.gameresults.GameHistoryService;
 import hu.unideb.inf.boardgame.player.Player;
 import hu.unideb.inf.boardgame.player.PlayerService;
 import javafx.event.ActionEvent;
@@ -16,6 +18,7 @@ import java.util.List;
 public class TopListController extends Controller {
 
     PlayerService playerService = new PlayerService();
+    GameHistoryService gameHistoryService = new GameHistoryService();
 
 
     @FXML
@@ -38,6 +41,12 @@ public class TopListController extends Controller {
         changeToScreen("MainMenuUI.fxml", event);
     }
 
+    @FXML
+    void onHistory(ActionEvent event) {
+        changeToScreen("History.fxml", event);
+    }
+
+
     private void addTopList() {
 
         List<Player> topPlayers = playerService.getTopList();
@@ -54,6 +63,8 @@ public class TopListController extends Controller {
         }
 
     }
+
+
 
 
 }
