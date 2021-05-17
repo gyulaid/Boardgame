@@ -2,6 +2,9 @@ package hu.unideb.inf.boardgame.gameresults;
 
 import java.util.List;
 
+/**
+ * Class for communicating with the Dao.
+ */
 public class GameHistoryService {
 
     GameHistoryDao gameHistoryDao = new GameHistoryDao();

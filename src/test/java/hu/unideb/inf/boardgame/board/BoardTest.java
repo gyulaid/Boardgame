@@ -42,6 +42,7 @@ public class BoardTest {
         testPlayer.setPassword("testplayer");
         testPlayer.setColor(PlayerColors.BLUE);
         PlayerCache.initializePlayerBlue(testPlayer);
+        BoardService.setCurrentPlayer(PlayerCache.getPlayerInstance(PlayerColors.BLUE));
 
 
         board = new Board.BoardBuilder()

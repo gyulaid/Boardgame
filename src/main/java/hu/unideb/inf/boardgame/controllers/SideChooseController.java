@@ -6,6 +6,9 @@ import hu.unideb.inf.boardgame.player.PlayerColors;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
+/**
+ * Controller class for side choosing view.
+ */
 public class SideChooseController extends Controller{
 
 

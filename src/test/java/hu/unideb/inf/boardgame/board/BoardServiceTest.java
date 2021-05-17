@@ -28,6 +28,8 @@ public class BoardServiceTest {
         testPlayerRed.setColor(PlayerColors.RED);
         PlayerCache.initializePlayerRed(testPlayerRed);
 
+        BoardService.setCurrentPlayer(PlayerCache.getPlayerInstance(PlayerColors.BLUE));
+
         board = new Board.BoardBuilder()
                 .boardSize(6, 7)
                 .restrictedZone(2, 4)
@@ -76,6 +78,7 @@ public class BoardServiceTest {
     @Test
     public void selectCellShouldSucceedIfCurrentPlayersColorEqualsTheDiskColorInCellToSelect() {
 
+
         Assertions.assertNull(board.getSelectedCell());
 
 
@@ -87,7 +90,7 @@ public class BoardServiceTest {
 
         System.out.println(board.getSelectedCell());
 
-        boardService.setCurrentPlayer(PlayerCache.getPlayerInstance(PlayerColors.RED));
+        BoardService.setCurrentPlayer(PlayerCache.getPlayerInstance(PlayerColors.RED));
 
         boardService.selectCell(0, 0);
 

@@ -11,6 +11,9 @@ import javafx.scene.layout.GridPane;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Controller class for the game history UI.
+ */
 public class HistoryUIController extends Controller{
 
 

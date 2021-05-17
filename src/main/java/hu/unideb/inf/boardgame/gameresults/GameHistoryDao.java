@@ -10,6 +10,9 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class for writing and reading the database.
+ */
 public class GameHistoryDao {
 
 
@@ -17,8 +20,11 @@ public class GameHistoryDao {
     private ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 
 
-
-
+    /**
+     * Collects history to list from json file.
+     *
+     * @return List of GameHistory objects of the last games
+     */
     public List<GameHistory> getHistory() {
         var ref = new TypeReference<List<GameHistory>>() {
         };
@@ -30,7 +36,11 @@ public class GameHistoryDao {
         return new ArrayList<>();
     }
 
-
+    /**
+     * Saves result of currently finished game.
+     *
+     * @param resultToSave GameHistory object of the currently finished game
+     */
     public void saveResults(GameHistory resultToSave) {
 
         try {
@@ -48,7 +58,6 @@ public class GameHistoryDao {
             log.error("Exception caught {}", ex.getMessage());
         }
     }
-
 
 
 }
