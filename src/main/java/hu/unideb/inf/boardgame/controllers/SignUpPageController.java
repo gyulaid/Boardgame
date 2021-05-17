@@ -5,6 +5,7 @@ import hu.unideb.inf.boardgame.player.PlayerService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
@@ -23,7 +24,7 @@ public class SignUpPageController extends Controller {
     private TextField userNameField;
 
     @FXML
-    private TextField passwordField;
+    private PasswordField passwordField;
 
     @FXML
     void onMainMenu(ActionEvent event) {

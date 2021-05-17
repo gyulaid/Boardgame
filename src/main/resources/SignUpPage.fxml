@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
+<?import javafx.scene.control.PasswordField?>
 <VBox alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity"
       minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
       fx:controller="hu.unideb.inf.boardgame.controllers.SignUpPageController"
@@ -14,7 +15,7 @@
       <Label text="User name" />
       <TextField fx:id="userNameField" prefHeight="24.0" prefWidth="225.0" />
       <Label text="Password" />
-      <TextField fx:id="passwordField" />
+      <PasswordField fx:id="passwordField" />
       <Button mnemonicParsing="false" onAction="#onRegister" prefHeight="44.0" prefWidth="132.0" text="Register" />
       <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onMainMenu" prefHeight="30.0" prefWidth="91.0" text="Main menu" />
    </children>
