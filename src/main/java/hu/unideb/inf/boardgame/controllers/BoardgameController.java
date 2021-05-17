@@ -42,7 +42,7 @@ public class BoardgameController extends Controller {
                 .restrictedZone(2, 4)
                 .restrictedZone(3, 2)
                 .build();
-
+        gameHistoryService = new GameHistoryService();
         boardService = new BoardService(board);
         PlayerCache.getPlayerInstance(PlayerColors.BLUE).setColor(PlayerColors.BLUE);
         PlayerCache.getPlayerInstance(PlayerColors.RED).setColor(PlayerColors.RED);
