@@ -19,7 +19,7 @@ public class GameHistoryDao {
 
 
 
-    protected List<GameHistory> getHistory() {
+    public List<GameHistory> getHistory() {
         var ref = new TypeReference<List<GameHistory>>() {
         };
         try {
@@ -31,7 +31,7 @@ public class GameHistoryDao {
     }
 
 
-    protected void saveResults(GameHistory resultToSave) {
+    public void saveResults(GameHistory resultToSave) {
 
         try {
             List<GameHistory> history = getHistory();
