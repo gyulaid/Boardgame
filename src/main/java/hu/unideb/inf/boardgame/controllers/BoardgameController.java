@@ -13,7 +13,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -226,6 +225,8 @@ public class BoardgameController extends Controller {
                         boardcell.getColumnIndex() == GridPane.getColumnIndex(cell))
                 .findAny();
 
+        cell.getStyleClass().remove("selected");
+
         if (boardCell.isPresent()) {
             if (boardCell.get().isRestrictedCell()) {
                 cell.getStyleClass().add("restricted");
@@ -244,8 +245,7 @@ public class BoardgameController extends Controller {
 
                 if (!cell.getStyleClass().contains("disk") && hasDisk) {
                     cell.getStyleClass().add("disk");
-                }
-                else if(cell.getStyleClass().contains("disk") && !hasDisk){
+                } else if (cell.getStyleClass().contains("disk") && !hasDisk) {
                     cell.getStyleClass().remove("disk");
                 }
 
@@ -260,6 +260,7 @@ public class BoardgameController extends Controller {
         cell.setOnMouseClicked(this::handleSelectClick);
 
     }
+
 }
 
 
