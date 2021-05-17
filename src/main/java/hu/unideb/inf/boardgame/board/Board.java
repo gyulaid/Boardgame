@@ -22,7 +22,12 @@ public class Board {
     private int COLUMNS_OF_BOARD;
 
 
-
+    /**
+     * Collects boardcells with the disks with the given color.
+     *
+     * @param color PlayerColor as the color of the disk owner
+     * @return List of BoardCell objects with the owner's color
+     */
     public List<BoardCell> getCellsWithDisks(PlayerColors color) {
 
         return cells.stream()
@@ -31,7 +36,13 @@ public class Board {
                 .collect(Collectors.toList());
     }
 
-
+    /**
+     * Searches for the cell of the given indexes.
+     *
+     * @param row    {@code int} value of the index of the row
+     * @param column {@code int} value of the index of the column
+     * @return BoardCell object with the given indexes
+     */
     public BoardCell getCell(int row, int column) {
         return getCells().stream()
                 .filter(boardcell -> boardcell.getRowIndex() == row &&
@@ -39,7 +50,13 @@ public class Board {
                 .findAny().orElse(null);
     }
 
-
+    /**
+     * Searches for the disk in the cell of given indexes.
+     *
+     * @param row    {@code int} value of the index of the row
+     * @param column {@code int} value of the index of the column
+     * @return Disk object present in the cell
+     */
     public Disk getDiskInCell(int row, int column) {
         return getCells().stream()
                 .filter(boardcell -> boardcell.getRowIndex() == row &&
@@ -48,6 +65,11 @@ public class Board {
                 .findAny().orElse(null);
     }
 
+    /**
+     * Searches for the selected boardcell.
+     *
+     * @return BoardCell object which is selected
+     */
     public BoardCell getSelectedCell() {
         return cells.stream()
                 .filter(BoardCell::isSelected)
@@ -56,7 +78,9 @@ public class Board {
 
     }
 
-
+    /**
+     * Builder class for Board.
+     */
     public static class BoardBuilder {
 
         private List<BoardCell> cells = new ArrayList<>();
@@ -64,7 +88,13 @@ public class Board {
         private int ROWS_OF_BOARD;
         private int COLUMNS_OF_BOARD;
 
-
+        /**
+         * Defines the size of the board by row and column size.
+         *
+         * @param rowSize    amount of rows of the board
+         * @param columnSize amount of columns of the board
+         * @return BoardBuilder object to contiune building
+         */
         public BoardBuilder boardSize(int rowSize, int columnSize) {
             ROWS_OF_BOARD = rowSize;
             COLUMNS_OF_BOARD = columnSize;
@@ -72,12 +102,25 @@ public class Board {
             return this;
         }
 
+        /**
+         * Checks if the cell with given row and column index is restricted.
+         *
+         * @param row {@code int} value of the index of the row
+         * @param col {@code int} value of the index of the column
+         * @return Boolean true if the cell is restricted, false if not
+         */
         private boolean isRestrictedCell(int row, int col) {
             return restrictedCells.contains(BoardCell.builder()
                     .rowIndex(row)
                     .columnIndex(col).build());
         }
 
+        /**
+         * Creates disks for the players in the first rows each side on the board.
+         *
+         * @param rowIndex {@code int} value of the index of the row to put the disk in
+         * @return Disk with a color based on the side of the board
+         */
         private Disk createDiskByRowIndex(int rowIndex) {
             if (rowIndex == 0) {
                 return new Disk(PlayerColors.RED);
@@ -87,7 +130,13 @@ public class Board {
             return null;
         }
 
-
+        /**
+         * Sets the restricted cells on the board.
+         *
+         * @param rowIndex    {@code int} value of the index of the row
+         * @param columnIndex {@code int} value of the index of the column
+         * @return BoardBuilder object to contiune building
+         */
         public BoardBuilder restrictedZone(int rowIndex, int columnIndex) {
             BoardCell restrictedCell = BoardCell.builder()
                     .rowIndex(rowIndex)
@@ -99,6 +148,11 @@ public class Board {
             return this;
         }
 
+        /**
+         * Constructs a Board object ready to play on.
+         *
+         * @return Board object with all parameters
+         */
         public Board build() {
             Board board = new Board();
 

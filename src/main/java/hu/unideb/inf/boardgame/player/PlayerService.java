@@ -24,7 +24,11 @@ public class PlayerService {
     private PlayerDao playerDao = new PlayerDao();
 
 
-
+    /**
+     * Makes a list of every single player in the database.
+     *
+     * @return List of Player objects from the database
+     */
     public List<Player> getAllPlayers(){
         return playerDao.getPlayers();
     }
