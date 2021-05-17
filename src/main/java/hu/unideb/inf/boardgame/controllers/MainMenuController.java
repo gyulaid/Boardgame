@@ -67,7 +67,7 @@ public class MainMenuController extends Controller {
                 PlayerCache.initializePlayerBlue(playerService.getPlayerData(playerBlue.getText()));
                 PlayerCache.initializePlayerRed(playerService.getPlayerData(playerRed.getText()));
 
-                changeToScreen("BoardgameUI.fxml", event);
+                changeToScreen("SideChoose.fxml", event);
             }
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

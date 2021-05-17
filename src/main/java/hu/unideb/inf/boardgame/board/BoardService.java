@@ -7,6 +7,7 @@ import hu.unideb.inf.boardgame.player.Player;
 import hu.unideb.inf.boardgame.player.PlayerCache;
 import hu.unideb.inf.boardgame.player.PlayerColors;
 import hu.unideb.inf.boardgame.player.PlayerService;
+import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,8 @@ public class BoardService {
     private Player redPlayer = PlayerCache.getPlayerInstance(PlayerColors.RED);
     private PlayerService playerService = new PlayerService();
     @Setter
-    private Player currentPlayer = PlayerCache.getPlayerInstance(PlayerColors.BLUE);
+    @Getter
+    private static Player currentPlayer;
 
     /**
      * Constructor with a parameter.
@@ -73,7 +75,7 @@ public class BoardService {
         } else if (possibleRedSteps == 0) {
             playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.BLUE).getUserName(), GameResult.WON);
             playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.RED).getUserName(), GameResult.LOST);
-            gameHistory = new GameHistory(PlayerColors.RED);
+            gameHistory = new GameHistory(PlayerColors.BLUE);
             gameHistoryService.saveResults(gameHistory);
             log.info("Game over");
         }

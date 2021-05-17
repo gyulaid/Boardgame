@@ -43,7 +43,7 @@ public class BoardgameController extends Controller {
         boardService = new BoardService(board);
         PlayerCache.getPlayerInstance(PlayerColors.BLUE).setColor(PlayerColors.BLUE);
         PlayerCache.getPlayerInstance(PlayerColors.RED).setColor(PlayerColors.RED);
-        activeColor = PlayerColors.BLUE;
+        activeColor = BoardService.getCurrentPlayer().getColor();
     }
 
 
@@ -116,7 +116,7 @@ public class BoardgameController extends Controller {
 
         boardService.stepTo(row, col);
         updateDisks(activeColor);
-        activeColor = PlayerColors.RED == activeColor ? PlayerColors.BLUE : PlayerColors.RED;
+        activeColor = BoardService.getCurrentPlayer().getColor();
         updateCells();
         checkActiveGame(event);
     }
