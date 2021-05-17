@@ -53,11 +53,20 @@ public class PlayerCache {
         playerBlueInstance = player;
     }
 
-
+    /**
+     * Sets the winner color to store in Cache.
+     *
+     * @param color PlayerColors property of the winning player
+     */
     public static void setWinningColor(PlayerColors color){
         winningColor = color;
     }
 
+    /**
+     * Getter for winning color.
+     *
+     * @return PlayerColors object
+     */
     public static PlayerColors getWinningColor(){
         return winningColor;
     }
