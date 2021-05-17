@@ -12,6 +12,7 @@ public class PlayerCache {
     private static Logger log = LoggerFactory.getLogger(PlayerCache.class);
     private static Player playerBlueInstance = null;
     private static Player playerRedInstance = null;
+    private static PlayerColors winningColor = null;
 
     private PlayerCache() {
     }
@@ -53,6 +54,15 @@ public class PlayerCache {
     public static void initializePlayerBlue(Player player) {
         log.info("Initializing player blue in the cache");
         playerBlueInstance = player;
+    }
+
+
+    public static void setWinningColor(PlayerColors color){
+        winningColor = color;
+    }
+
+    public static PlayerColors getWinningColor(){
+        return winningColor;
     }
 
 }

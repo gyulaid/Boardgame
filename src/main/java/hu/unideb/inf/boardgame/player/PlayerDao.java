@@ -8,7 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +26,7 @@ public class PlayerDao {
 
     private static Logger log = LoggerFactory.getLogger(PlayerDao.class);
     private ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+    private File file;
 
     /**
      * Gets all the users from the database.
@@ -28,13 +34,33 @@ public class PlayerDao {
      * @return a list of player objects, may return an {@code ArrayList<>()}
      */
     public List<Player> getPlayers() {
+
         var ref = new TypeReference<List<Player>>() {
         };
-        try {
-            return objectMapper.readValue(getClass().getClassLoader().getResourceAsStream("players.json"), ref);
+        String path = System.getProperty("user.home")+"/.gamedata";
+        File dir = new File(path);
+        file = new File(dir.getPath()+"/players.json");
+
+        try{
+            Files.createDirectories(Paths.get(path));
         } catch (Exception e) {
-            log.error("Error occured during reading file: {}", e.getMessage());
+            log.error(e.getMessage());
         }
+
+        if (file.exists()){
+            try{
+                return objectMapper.readValue(file, ref);
+            } catch (Exception e){
+                log.error("Error during reading file {}", e.getMessage());
+            }
+        } else {
+            try{
+                file.createNewFile();
+            } catch (Exception e){
+                log.error("Exception during creating file {}", e.getMessage());
+            }
+        }
+
         return new ArrayList<>();
     }
 
@@ -50,7 +76,7 @@ public class PlayerDao {
 
             players.add(playerToSave);
 
-            FileWriter writer = new FileWriter(getClass().getClassLoader().getResource("players.json").getPath());
+            FileWriter writer = new FileWriter(file);
 
             objectMapper.writeValue(writer, players);
 
@@ -72,7 +98,7 @@ public class PlayerDao {
             log.info("Deleting player");
             players.remove(playerToDelete);
 
-            FileWriter writer = new FileWriter(getClass().getClassLoader().getResource("players.json").getPath());
+            FileWriter writer = new FileWriter(file);
 
             objectMapper.writeValue(writer, players);
 
@@ -123,7 +149,7 @@ public class PlayerDao {
 
             players.set(players.indexOf(playerToUpdate), updatedPlayer);
 
-            FileWriter writer = new FileWriter(getClass().getClassLoader().getResource("players.json").getPath());
+            FileWriter writer = new FileWriter(file);
 
             objectMapper.writeValue(writer, players);
 

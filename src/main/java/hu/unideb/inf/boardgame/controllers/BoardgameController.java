@@ -3,6 +3,8 @@ package hu.unideb.inf.boardgame.controllers;
 import hu.unideb.inf.boardgame.board.Board;
 import hu.unideb.inf.boardgame.board.BoardCell;
 import hu.unideb.inf.boardgame.board.BoardService;
+import hu.unideb.inf.boardgame.gameresults.GameHistory;
+import hu.unideb.inf.boardgame.gameresults.GameHistoryService;
 import hu.unideb.inf.boardgame.player.PlayerCache;
 import hu.unideb.inf.boardgame.player.PlayerColors;
 import javafx.event.ActionEvent;
@@ -29,6 +31,8 @@ public class BoardgameController extends Controller {
     private PlayerColors activeColor;
     private Board board;
     private final BoardService boardService;
+    private GameHistory gameHistory;
+    private GameHistoryService gameHistoryService;
 
     /**
      * Default constructor.
@@ -125,6 +129,8 @@ public class BoardgameController extends Controller {
         log.info("Checking active game");
         if (!boardService.isGameActive()) {
             log.info("Game over");
+            gameHistory = new GameHistory(PlayerCache.getWinningColor());
+            gameHistoryService.saveResults(gameHistory);
             changeToScreen("TopList.fxml", event);
         }
     }

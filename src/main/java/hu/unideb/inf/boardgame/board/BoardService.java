@@ -68,15 +68,12 @@ public class BoardService {
         if (possibleBlueSteps == 0) {
             playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.BLUE).getUserName(), GameResult.LOST);
             playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.RED).getUserName(), GameResult.WON);
-            gameHistory = new GameHistory(PlayerColors.RED);
-            gameHistoryService.saveResults(gameHistory);
-
+            PlayerCache.setWinningColor(PlayerColors.RED);
             log.info("Game over");
         } else if (possibleRedSteps == 0) {
             playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.BLUE).getUserName(), GameResult.WON);
             playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.RED).getUserName(), GameResult.LOST);
-            gameHistory = new GameHistory(PlayerColors.BLUE);
-            gameHistoryService.saveResults(gameHistory);
+            PlayerCache.setWinningColor(PlayerColors.BLUE);
             log.info("Game over");
         }
 
