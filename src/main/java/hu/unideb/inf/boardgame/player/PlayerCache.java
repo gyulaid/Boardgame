@@ -1,15 +1,12 @@
 package hu.unideb.inf.boardgame.player;
 
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.tinylog.Logger;
 
 /**
  * Class for caching the logged in players.
  */
 public class PlayerCache {
 
-    private static Logger log = LoggerFactory.getLogger(PlayerCache.class);
     private static Player playerBlueInstance = null;
     private static Player playerRedInstance = null;
     private static PlayerColors winningColor = null;
@@ -26,10 +23,10 @@ public class PlayerCache {
      */
     public static Player getPlayerInstance(PlayerColors color) {
         if (color.equals(PlayerColors.BLUE)) {
-            log.info("Getting player blue data");
+            Logger.info("Getting player blue data");
             return playerBlueInstance;
         } else if (color.equals(PlayerColors.RED)) {
-            log.info("Getting player red data");
+            Logger.info("Getting player red data");
             return playerRedInstance;
         }
         return null;
@@ -41,7 +38,7 @@ public class PlayerCache {
      * @param player Player to be the red instance
      */
     public static void initializePlayerRed(Player player) {
-        log.info("Initializing player red in the cache");
+        Logger.info("Initializing player red in the cache");
         playerRedInstance = player;
     }
 
@@ -52,7 +49,7 @@ public class PlayerCache {
      * @param player Player to be the blue instance
      */
     public static void initializePlayerBlue(Player player) {
-        log.info("Initializing player blue in the cache");
+        Logger.info("Initializing player blue in the cache");
         playerBlueInstance = player;
     }
 

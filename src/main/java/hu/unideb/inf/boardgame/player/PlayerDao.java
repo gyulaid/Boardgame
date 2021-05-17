@@ -4,15 +4,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import hu.unideb.inf.boardgame.gameresults.GameResult;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.tinylog.Logger;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +20,6 @@ import java.util.List;
 public class PlayerDao {
 
 
-    private static Logger log = LoggerFactory.getLogger(PlayerDao.class);
     private ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
     private File file;
 
@@ -44,20 +39,20 @@ public class PlayerDao {
         try{
             Files.createDirectories(Paths.get(path));
         } catch (Exception e) {
-            log.error(e.getMessage());
+            Logger.error(e.getMessage());
         }
 
         if (file.exists()){
             try{
                 return objectMapper.readValue(file, ref);
             } catch (Exception e){
-                log.error("Error during reading file {}", e.getMessage());
+                Logger.error("Error during reading file {}", e.getMessage());
             }
         } else {
             try{
                 file.createNewFile();
             } catch (Exception e){
-                log.error("Exception during creating file {}", e.getMessage());
+                Logger.error("Exception during creating file {}", e.getMessage());
             }
         }
 
@@ -80,10 +75,10 @@ public class PlayerDao {
 
             objectMapper.writeValue(writer, players);
 
-            log.debug("Write file");
+            Logger.debug("Write file");
 
         } catch (Exception ex) {
-            log.error("Exception caught {}", ex.getMessage());
+            Logger.error("Exception caught {}", ex.getMessage());
         }
     }
 
@@ -95,17 +90,17 @@ public class PlayerDao {
     public void deletePlayer(Player playerToDelete) {
         try {
             List<Player> players = getPlayers();
-            log.info("Deleting player");
+            Logger.info("Deleting player");
             players.remove(playerToDelete);
 
             FileWriter writer = new FileWriter(file);
 
             objectMapper.writeValue(writer, players);
 
-            log.info("Write file");
+            Logger.info("Write file");
 
         } catch (Exception ex) {
-            log.error("Exception caught {}", ex.getMessage());
+            Logger.error("Exception caught {}", ex.getMessage());
         }
     }
 
@@ -141,10 +136,10 @@ public class PlayerDao {
 
             if (result.equals(GameResult.WON)) {
                 updatedPlayer.setAmountOfWins(updatedPlayer.getAmountOfWins() + 1);
-                log.info("Updateing player win");
+                Logger.info("Updateing player win");
             } else if (result.equals(GameResult.LOST)) {
                 updatedPlayer.setAmountOfLosses(playerToUpdate.getAmountOfLosses() + 1);
-                log.info("Updating player loss");
+                Logger.info("Updating player loss");
             }
 
             players.set(players.indexOf(playerToUpdate), updatedPlayer);
@@ -153,10 +148,10 @@ public class PlayerDao {
 
             objectMapper.writeValue(writer, players);
 
-            log.info("Write file");
+            Logger.info("Write file");
 
         } catch (Exception ex) {
-            log.error("Exception caught {}", ex.getMessage());
+            Logger.error("Exception caught {}", ex.getMessage());
         }
     }
 

@@ -7,9 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.tinylog.Logger;
 
 import java.io.IOException;
 
@@ -19,7 +17,6 @@ import java.io.IOException;
 public class Controller {
 
 
-    private static Logger log = LoggerFactory.getLogger(Controller.class);
 
     /**
      * Change to a another view.
@@ -34,10 +31,10 @@ public class Controller {
             Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             appStage.setScene(scene);
             appStage.show();
-            log.info("Changed screen");
+            Logger.info("Changed screen");
 
         } catch (IOException ioe) {
-            log.error("Error: Cannot load the FXML file" + fxml);
+            Logger.error("Error: Cannot load the FXML file" + fxml);
             ioe.printStackTrace();
         }
 
@@ -57,10 +54,10 @@ public class Controller {
             Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             appStage.setScene(scene);
             appStage.show();
-            log.info("Changed screen");
+            Logger.info("Changed screen");
 
         } catch (IOException ioe) {
-            log.error("Error: Cannot load the FXML file" + fxml);
+            Logger.error("Error: Cannot load the FXML file" + fxml);
             ioe.printStackTrace();
         }
 

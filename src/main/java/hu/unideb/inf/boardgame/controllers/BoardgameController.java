@@ -15,8 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.tinylog.Logger;
 
 import java.util.List;
 import java.util.Objects;
@@ -27,7 +26,6 @@ import java.util.Optional;
  */
 public class BoardgameController extends Controller {
 
-    private static Logger log = LoggerFactory.getLogger(BoardgameController.class);
     private PlayerColors activeColor;
     private Board board;
     private final BoardService boardService;
@@ -79,7 +77,7 @@ public class BoardgameController extends Controller {
     private void addCellToBoard(BoardCell boardCell) {
         StackPane cell = new StackPane();
 
-        log.info("Addig cell to board in UI");
+        Logger.info("Addig cell to board in UI");
 
         if (boardCell.isRestrictedCell()) {
             cell.getStyleClass().add("restricted");
@@ -126,9 +124,9 @@ public class BoardgameController extends Controller {
 
     @FXML
     private void checkActiveGame(MouseEvent event) {
-        log.info("Checking active game");
+        Logger.info("Checking active game");
         if (!boardService.isGameActive()) {
-            log.info("Game over");
+            Logger.info("Game over");
             gameHistory = new GameHistory(PlayerCache.getWinningColor());
             gameHistoryService.saveResults(gameHistory);
             changeToScreen("TopList.fxml", event);
@@ -137,7 +135,7 @@ public class BoardgameController extends Controller {
 
 
     private void updateCells() {
-        log.info("Updating cells in UI");
+        Logger.info("Updating cells in UI");
         gameboard.getChildren()
                 .stream()
                 .filter(children -> children instanceof StackPane)
@@ -146,11 +144,11 @@ public class BoardgameController extends Controller {
 
         updateAvailableCells();
 
-        log.info("Cells updated in UI");
+        Logger.info("Cells updated in UI");
     }
 
     private void updateAvailableCells() {
-        log.info("Updating available cells on UI");
+        Logger.info("Updating available cells on UI");
         BoardCell selectedCell = board.getSelectedCell();
         if (Objects.nonNull(selectedCell)) {
 

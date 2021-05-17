@@ -3,9 +3,7 @@ package hu.unideb.inf.boardgame.player;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.tinylog.Logger;
 
 import java.text.DecimalFormat;
 
@@ -17,7 +15,6 @@ import java.text.DecimalFormat;
 @Data
 public class Player {
 
-    private static Logger log = LoggerFactory.getLogger(Player.class);
 
     /**
      * Username of the player.
@@ -68,7 +65,7 @@ public class Player {
      * @return an integer number of total games played
      */
     public Double gamesPlayed() {
-        log.info("Calculating total games played");
+        Logger.info("Calculating total games played");
         return amountOfLosses + amountOfWins;
     }
 
@@ -79,7 +76,7 @@ public class Player {
      * @return a floating point number calculated from wins and losses
      */
     public Double winPerLoseRatio() {
-        log.info("Calculating win per lose ratio");
+        Logger.info("Calculating win per lose ratio");
         if (amountOfLosses == 0) {
             return amountOfWins;
         } else if (amountOfWins == 0) {

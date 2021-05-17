@@ -1,9 +1,7 @@
 package hu.unideb.inf.boardgame.player;
 
 import hu.unideb.inf.boardgame.gameresults.GameResult;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.tinylog.Logger;
 
 import java.util.Comparator;
 import java.util.List;
@@ -16,7 +14,7 @@ import java.util.stream.Collectors;
  */
 public class PlayerService {
 
-    private static Logger log = LoggerFactory.getLogger(PlayerService.class);
+
 
     /**
      * Creates connection to the database {@code PlayerDao}.
@@ -47,12 +45,12 @@ public class PlayerService {
             throw new InvalidUserException("Password must be atleast 5 characters and can not contain spaces");
         }
 
-        log.info("Adding player to the database");
+        Logger.info("Adding player to the database");
 
         Player playerToAdd = new Player(userName, password);
         playerDao.savePlayer(playerToAdd);
 
-        log.info("Player added");
+        Logger.info("Player added");
     }
 
 
@@ -77,7 +75,7 @@ public class PlayerService {
      * @return Player object with the matching username
      */
     public Player getPlayerData(String userName) {
-        log.info("Getting player from database");
+        Logger.info("Getting player from database");
         return playerDao.searchByUserName(userName);
     }
 
@@ -94,11 +92,11 @@ public class PlayerService {
     public boolean validateLogIn(String userName, String password, String color) throws InvalidUserException {
         if (getPlayerData(userName) != null) {
             if (playerDao.searchByUserName(userName).getPassword().equals(password)) {
-                log.info("Login successful");
+                Logger.info("Login successful");
                 return true;
             }
         }
-        log.debug("Failed to login");
+        Logger.debug("Failed to login");
         throw new InvalidUserException(color + " player has entered invalid username/password");
     }
 
@@ -108,7 +106,7 @@ public class PlayerService {
      * @return List of players sorted
      */
     public List<Player> getTopList() {
-        log.info("Creating top list;");
+        Logger.info("Creating top list;");
         return playerDao.getPlayers()
                 .stream()
                 .sorted(Comparator.comparing(Player::winPerLoseRatio).reversed())
@@ -123,7 +121,7 @@ public class PlayerService {
      * @param result   String representing the outcome of the game of the player
      */
     public void updatePlayers(String userName, GameResult result) {
-        log.info("Updateing player data");
+        Logger.info("Updateing player data");
         playerDao.updatePlayer(userName, result);
     }
 

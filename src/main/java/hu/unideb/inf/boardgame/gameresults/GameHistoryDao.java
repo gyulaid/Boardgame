@@ -3,9 +3,7 @@ package hu.unideb.inf.boardgame.gameresults;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import hu.unideb.inf.boardgame.player.Player;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.tinylog.Logger;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -20,7 +18,6 @@ import java.util.List;
 public class GameHistoryDao {
 
 
-    private static Logger log = LoggerFactory.getLogger(GameHistoryDao.class);
     private ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
     File file;
 
@@ -39,20 +36,20 @@ public class GameHistoryDao {
         try{
             Files.createDirectories(Paths.get(path));
         } catch (Exception e) {
-            log.error(e.getMessage());
+            Logger.error(e.getMessage());
         }
 
         if (file.exists()){
             try{
                 return objectMapper.readValue(file, ref);
             } catch (Exception e){
-                log.error("Error during reading file {}", e.getMessage());
+                Logger.error("Error during reading file {}", e.getMessage());
             }
         } else {
             try{
                 file.createNewFile();
             } catch (Exception e){
-                log.error("Exception during creating file {}", e.getMessage());
+                Logger.error("Exception during creating file {}", e.getMessage());
             }
         }
         return new ArrayList<>();
@@ -74,10 +71,10 @@ public class GameHistoryDao {
 
             objectMapper.writeValue(writer, history);
 
-            log.debug("Write file");
+            Logger.debug("Write file");
 
         } catch (Exception ex) {
-            log.error("Exception caught {}", ex.getMessage());
+            Logger.error("Exception caught {}", ex.getMessage());
         }
     }
 

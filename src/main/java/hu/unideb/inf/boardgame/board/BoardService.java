@@ -9,8 +9,8 @@ import hu.unideb.inf.boardgame.player.PlayerColors;
 import hu.unideb.inf.boardgame.player.PlayerService;
 import lombok.Getter;
 import lombok.Setter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.tinylog.Logger;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,6 @@ import java.util.Objects;
  */
 public class BoardService {
 
-    private static Logger log = LoggerFactory.getLogger(BoardService.class);
 
     private GameHistory gameHistory;
     private GameHistoryService gameHistoryService = new GameHistoryService();
@@ -49,7 +48,7 @@ public class BoardService {
      * @return {@code true} if a player is able to move, {@code false} otherwise
      */
     public boolean isGameActive() {
-        log.info("Checking if a player won");
+        Logger.info("Checking if a player won");
         int possibleRedSteps = 0;
         int possibleBlueSteps = 0;
 
@@ -69,12 +68,12 @@ public class BoardService {
             playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.BLUE).getUserName(), GameResult.LOST);
             playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.RED).getUserName(), GameResult.WON);
             PlayerCache.setWinningColor(PlayerColors.RED);
-            log.info("Game over");
+            Logger.info("Game over");
         } else if (possibleRedSteps == 0) {
             playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.BLUE).getUserName(), GameResult.WON);
             playerService.updatePlayers(PlayerCache.getPlayerInstance(PlayerColors.RED).getUserName(), GameResult.LOST);
             PlayerCache.setWinningColor(PlayerColors.BLUE);
-            log.info("Game over");
+            Logger.info("Game over");
         }
 
 
@@ -177,7 +176,7 @@ public class BoardService {
         if (Objects.nonNull(board.getSelectedCell()) &&
                 getAvailableSteps(board.getSelectedCell().getRowIndex(), board.getSelectedCell().getColumnIndex()).contains(board.getCell(row, column))) {
 
-            log.info("Step from (" + board.getSelectedCell().getRowIndex() + ", " +
+            Logger.info("Step from (" + board.getSelectedCell().getRowIndex() + ", " +
                     board.getSelectedCell().getColumnIndex() + ") " + "to (" + row + ", " + column + ")");
 
             board.getCell(row, column).setDiskInCell(board.getSelectedCell().getDiskInCell());
